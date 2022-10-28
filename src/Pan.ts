@@ -1,5 +1,2 @@
-export class Pan {
-    log (): void {
-        console.log('this is pan')
-    }
-}
+const EventEmitter = require('./EventEmitter');
+module.exports = EventEmitter
