@@ -1,7 +1,7 @@
 export abstract class EventEmitter {
     eventMap = new Map()
 
-//     protected beforeOnEventListenerSetup(eventKey: string): void { console.warn("Being called from protected")  }
+    //     protected beforeOnEventListenerSetup(eventKey: string): void { console.warn("Being called from protected")  }
     abstract beforeOnEventListenerSetup(eventKey: string): void
 
     internalEmit(eventKey: string, eventInformation: object): void {

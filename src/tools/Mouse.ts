@@ -5,10 +5,6 @@ export default class Mouse extends EventEmitter {
         isMouseOnMoveEnabled: false
     }
 
-    constructor () {
-        super()
-    }
-
     mouseMove(eventInformation): void {
         const location = {
             x: eventInformation.offsetX,
