@@ -31,11 +31,24 @@
   <script src="js/main.js"></script>
   <script src="../dist/pan.js"></script>
   <script>
-  const em = new Pan.EventEmitter();
-  em.emit('meow')
-  console.log(em);
-  </script>
+  // Mouse Events
+  const mouse = new Pan.Mouse();
+  mouse.on("move", (event) => {
+      console.log(event);
+  });
 
+  //custom event emitter being created with class instantiation
+  const em = new Pan.EventEmitter();
+
+  em.on('log', () => {
+      console.log('log was called');
+  });
+
+  em.on('log', (eventInformation) => {
+      console.log('log was called ' + eventInformation.firstValue + eventInformation.secondValue);
+  })
+  em.emit('log', {firstValue: 6, secondValue: 9});
+  </script>
 
   <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
   <script>
