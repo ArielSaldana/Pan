@@ -15,7 +15,6 @@ export default class Mouse extends EventEmitter {
     }
 
     on(eventKey: string, eventCallback: Object) {
-        console.log(eventKey);
         switch (eventKey) {
             case "move":
                 if (!this.settings.isMouseOnMoveEnabled)
