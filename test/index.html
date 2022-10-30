@@ -34,20 +34,24 @@
   // Mouse Events
   const mouse = new Pan.Mouse();
   mouse.on("move", (event) => {
-      console.log(event);
+      if (event.x > 500) {
+          document.body.style.backgroundColor = "rgba(255,0,0,.1)";
+      } else {
+          document.body.style.backgroundColor = "rgba(0,0,255,.1)";
+      }
   });
 
   //custom event emitter being created with class instantiation
-  const em = new Pan.EventEmitter();
-
-  em.on('log', () => {
-      console.log('log was called');
-  });
-
-  em.on('log', (eventInformation) => {
-      console.log('log was called ' + eventInformation.firstValue + eventInformation.secondValue);
-  })
-  em.emit('log', {firstValue: 6, secondValue: 9});
+//  const em = new Pan.EventEmitter();
+//
+//  em.on('log', () => {
+//      console.log('log was called');
+//  });
+//
+//  em.on('log', (eventInformation) => {
+//      console.log('log was called ' + eventInformation.firstValue + eventInformation.secondValue);
+//  })
+//  em.emit('log', {firstValue: 6, secondValue: 9});
   </script>
 
   <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->

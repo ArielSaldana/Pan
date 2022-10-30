@@ -1,32 +1,37 @@
 import { EventEmitter } from '../EventEmitter'
 
 export default class Mouse extends EventEmitter {
-
     settings = {
         isMouseOnMoveEnabled: false
     }
 
-    mouseMove(eventInformation) {
+    constructor () {
+        super()
+    }
+
+    mouseMove(eventInformation): void {
         const location = {
             x: eventInformation.offsetX,
             y: eventInformation.offsetY
         }
-        this.emit("move", location)
+        this.emit('move', location)
     }
 
-    on(eventKey: string, eventCallback: Object) {
+    on(eventKey: string, eventCallback: Object): void {
+        this.internalOn(eventKey, eventCallback)
+    }
+
+    beforeOnEventListenerSetup(eventKey: string): void {
         switch (eventKey) {
-            case "move":
-                if (!this.settings.isMouseOnMoveEnabled)
-                    document.addEventListener("mousemove", (ev)=> {this.mouseMove(ev)});
-                this.internalOn(eventKey, eventCallback);
-                break;
+            case 'move':
+                if (!this.settings.isMouseOnMoveEnabled) { document.addEventListener('mousemove', (ev) => { this.mouseMove(ev) }) }
+                break
             default:
-                console.warn("This is not a supported Event");
+                console.warn('This is not a supported Event')
         }
     }
 
-    destroy() {
-        document.removeEventListener("mousemove", this.mouseMove)
+    destroy(): void {
+        document.removeEventListener('mousemove', this.mouseMove)
     }
 }
