@@ -2,7 +2,8 @@ import { EventEmitter } from '../EventEmitter'
 
 export default class Mouse extends EventEmitter {
     settings = {
-        isMouseOnMoveEnabled: false
+        isMouseOnMoveEnabled: false,
+        isMouseClickEnabled: false
     }
 
     mouseMove(eventInformation): void {
@@ -13,6 +14,10 @@ export default class Mouse extends EventEmitter {
         this.emit('move', location)
     }
 
+    mouseClick(eventInformation): void {
+        console.log(eventInformation)
+    }
+
     on(eventKey: string, eventCallback: Object): void {
         this.internalOn(eventKey, eventCallback)
     }
@@ -20,8 +25,19 @@ export default class Mouse extends EventEmitter {
     beforeOnEventListenerSetup(eventKey: string): void {
         switch (eventKey) {
             case 'move':
-                if (!this.settings.isMouseOnMoveEnabled) { document.addEventListener('mousemove', (ev) => { this.mouseMove(ev) }) }
+                if (!this.settings.isMouseOnMoveEnabled) {
+                    document.addEventListener('mousemove', (ev) => {
+                        this.mouseMove(ev)
+                    })
+                }
                 break
+            case 'click':
+                if (!this.settings.isMouseClickEnabled) {
+                    document.addEventListener('click', (ev) => {
+                        this.mouseClick(ev)
+                    })
+                }
+                break;
             default:
                 console.warn('This is not a supported Event')
         }

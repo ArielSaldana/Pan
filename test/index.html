@@ -35,10 +35,14 @@
   const mouse = new Pan.Mouse();
   mouse.on("move", (event) => {
       if (event.x > 500) {
-          document.body.style.backgroundColor = "rgba(255,0,0,.1)";
+          document.body.style.backgroundColor = "rgba(255,0,0,.1)"
       } else {
-          document.body.style.backgroundColor = "rgba(0,0,255,.1)";
+          document.body.style.backgroundColor = "rgba(0,0,255,.1)"
       }
+  });
+
+  mouse.on("click", (event) => {
+      console.log(event)
   });
 
   //custom event emitter being created with class instantiation
