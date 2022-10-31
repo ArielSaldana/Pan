@@ -1,5 +1,8 @@
+import { EventFunctions } from './EventFunctions'
+
 export abstract class EventEmitter {
     eventMap = new Map()
+    functionsMap = new Map<string, EventFunctions>()
 
     //     protected beforeOnEventListenerSetup(eventKey: string): void { console.warn("Being called from protected")  }
     abstract beforeOnEventListenerSetup(eventKey: string): void
@@ -30,5 +33,28 @@ export abstract class EventEmitter {
 
     on(eventKey: string, eventCallback: Object): void {
         this.internalOn(eventKey, eventCallback)
+    }
+
+    registerEventListenerFunction(eventKey: string, eventFunction: EventFunctions): void {
+        if (!this.functionsMap.has(eventKey)) {
+            eventFunction.initFunction()
+            this.functionsMap.set(eventKey, eventFunction)
+        } else {
+            console.warn('Function key already exists, calling register failed')
+        }
+    }
+
+    destroyEventEmitterFunction(eventKey: string): void {
+        if (this.functionsMap.has(eventKey)) {
+            const registeredFunctions = this.functionsMap.get(eventKey)
+
+            if (registeredFunctions !== null && registeredFunctions !== undefined) {
+                registeredFunctions.destroyFunction()
+            }
+
+            this.functionsMap.delete(eventKey)
+        } else {
+            console.warn('Function key does not exist, calling destroy failed')
+        }
     }
 }
