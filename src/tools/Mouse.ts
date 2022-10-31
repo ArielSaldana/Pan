@@ -15,7 +15,19 @@ export default class Mouse extends EventEmitter {
     }
 
     mouseClick(eventInformation): void {
-        console.log(eventInformation)
+        let val = 0
+        if (eventInformation.which === 1 || eventInformation.button === 0) {
+            val = 0 // left click
+        } else if (eventInformation.which === 3 || eventInformation.button === 2) {
+            val = 1 // right click
+        }
+
+        const location = {
+            x: eventInformation.offsetX,
+            y: eventInformation.offsetY,
+            button: val
+        }
+        this.emit('click', location)
     }
 
     on(eventKey: string, eventCallback: Object): void {
@@ -26,18 +38,18 @@ export default class Mouse extends EventEmitter {
         switch (eventKey) {
             case 'move':
                 if (!this.settings.isMouseOnMoveEnabled) {
-                    document.addEventListener('mousemove', (ev) => {
+                    window.addEventListener('mousemove', (ev) => {
                         this.mouseMove(ev)
                     })
                 }
                 break
             case 'click':
                 if (!this.settings.isMouseClickEnabled) {
-                    document.addEventListener('click', (ev) => {
+                    window.addEventListener('click', (ev) => {
                         this.mouseClick(ev)
                     })
                 }
-                break;
+                break
             default:
                 console.warn('This is not a supported Event')
         }
