@@ -1,4 +1,4 @@
-import { EventEmitter } from '../EventEmitter'
+import { EventEmitter } from '../event-emitter/EventEmitter'
 
 export default class Mouse extends EventEmitter {
     settings = {
@@ -6,16 +6,18 @@ export default class Mouse extends EventEmitter {
         isMouseClickEnabled: false
     }
 
-    events = {
-        move: {
-            create: () => { this.registerMouseMoveEventListener() },
-            destroy: () => { this.destroyMouseMoveEventListener() }
-        },
-        click: {
-            create: () => { this.registerMouseClickEventListener() },
-            destroy: () => { this.destroyMouseClickEventListener() }
-        }
-    }
+    override events = new Map(
+        Object.entries({
+            move: {
+                initFunction: () => { this.registerMouseMoveEventListener() },
+                destroyFunction: () => { this.destroyMouseMoveEventListener() }
+            },
+            click: {
+                initFunction: () => { this.registerMouseClickEventListener() },
+                destroyFunction: () => { this.destroyMouseClickEventListener() }
+            }
+        })
+    )
 
     mouseMove(eventInformation): void {
         const location = {

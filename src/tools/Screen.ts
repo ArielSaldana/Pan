@@ -1,18 +1,20 @@
-import { EventEmitter } from '../Pan'
+import { EventEmitter } from '../event-emitter/EventEmitter'
 
 export default class Screen extends EventEmitter {
     settings = {
         isScreenResizeEnabled: false
     }
 
-    events = {
-        resize: {
-            create: () => { this.registerScreenResizeListener() },
-            destroy: () => { this.destroyScreenResizeListener() }
-        }
-    }
+    override events = new Map(
+        Object.entries({
+            resize: {
+                initFunction: () => { this.registerScreenResizeListener() },
+                destroyFunction: () => { this.destroyScreenResizeListener() }
+            }
+        })
+    )
 
-    screenResize(eventInformation): void {
+    screenResize(): void {
         const location = {
             width: window.innerWidth,
             height: window.innerHeight
@@ -22,8 +24,8 @@ export default class Screen extends EventEmitter {
 
     registerScreenResizeListener(): void {
         if (!this.settings.isScreenResizeEnabled) {
-            window.addEventListener('resize', (ev) => {
-                this.screenResize(ev)
+            window.addEventListener('resize', () => {
+                this.screenResize()
             })
             this.settings.isScreenResizeEnabled = true
         }
