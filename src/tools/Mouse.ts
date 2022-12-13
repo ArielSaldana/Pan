@@ -6,6 +6,17 @@ export default class Mouse extends EventEmitter {
         isMouseClickEnabled: false
     }
 
+    events = {
+        move: {
+            create: () => { this.registerMouseMoveEventListener() },
+            destroy: () => { this.destroyMouseMoveEventListener() }
+        },
+        click: {
+            create: () => { this.registerMouseClickEventListener() },
+            destroy: () => { this.destroyMouseClickEventListener() }
+        }
+    }
+
     mouseMove(eventInformation): void {
         const location = {
             x: eventInformation.offsetX,
@@ -28,25 +39,6 @@ export default class Mouse extends EventEmitter {
             button: val
         }
         this.emit('click', location)
-    }
-
-    beforeOnEventListenerSetup(eventKey: string): void {
-        switch (eventKey) {
-            case 'move':
-                this.registerEventListenerFunction(eventKey, {
-                    initFunction: this.registerMouseMoveEventListener.bind(this),
-                    destroyFunction: this.destroyMouseMoveEventListener.bind(this)
-                })
-                break
-            case 'click':
-                this.registerEventListenerFunction(eventKey, {
-                    initFunction: this.registerMouseClickEventListener.bind(this),
-                    destroyFunction: this.destroyMouseClickEventListener.bind(this)
-                })
-                break
-            default:
-                console.warn('This is not a supported Event')
-        }
     }
 
     registerMouseMoveEventListener(): void {

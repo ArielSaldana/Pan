@@ -6,8 +6,20 @@ export abstract class EventEmitter {
     eventMap = new Map()
     functionsMap = new Map<string, EventFunctions>()
 
-    //     protected beforeOnEventListenerSetup(eventKey: string): void { console.warn("Being called from protected")  }
-    abstract beforeOnEventListenerSetup(eventKey: string): void
+    abstract events: Object
+
+    beforeOnEventListenerSetup(eventKey: string): void { }
+
+    setupEvents(eventKey: string): void {
+        if (this.events[eventKey] !== undefined) {
+            this.registerEventListenerFunction(eventKey, {
+                initFunction: this.events[eventKey].create.bind(this),
+                destroyFunction: this.events[eventKey].destroy.bind(this)
+            })
+        } else {
+            console.warn('This is not a supported Event')
+        }
+    }
 
     internalEmit(eventKey: string, eventInformation: object): void {
         if (this.eventMap.has(eventKey)) {
@@ -19,6 +31,7 @@ export abstract class EventEmitter {
 
     internalOn(eventKey: string, eventCallback: Object): void {
         this.beforeOnEventListenerSetup(eventKey)
+        this.setupEvents(eventKey)
         let arr
         if (this.eventMap.get(eventKey) !== undefined) {
             arr = this.eventMap.get(eventKey)
