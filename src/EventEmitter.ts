@@ -1,6 +1,8 @@
 import { EventFunctions } from './EventFunctions'
+import { AnimationQueue } from './AnimationQueue'
 
 export abstract class EventEmitter {
+    animationQueue = AnimationQueue.getInstance()
     eventMap = new Map()
     functionsMap = new Map<string, EventFunctions>()
 
