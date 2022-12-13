@@ -45,6 +45,12 @@
       }
   });
 
+  const screen = new Pan.Screen()
+
+  screen.on("resize", (event) => {
+      console.log(event)
+  })
+
   mouse.on("click", (event) => {
       console.log(event)
   });
