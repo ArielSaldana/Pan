@@ -2,7 +2,7 @@
   "name": "@unreal/pan",
   "version": "0.0.4",
   "main": "dist/pan.js",
-  "types": "dist/pan.d.ts",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "webpackBuild": "webpack --mode production",
