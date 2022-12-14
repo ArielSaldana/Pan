@@ -2,13 +2,16 @@
   "name": "@unreal/pan",
   "version": "0.0.2",
   "main": "dist/pan.js",
+  "types": "dist/pan.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "webpackBuild": "webpack --mode production",
     "webpackWatch": "webpack --watch",
     "build": "tsc",
     "lint": "eslint . --ext .ts",
-    "lint-fix": "npm run lint -- --fix"
+    "lint-fix": "npm run lint -- --fix",
+    "generate-declarations": "tsc src/Pan.ts --declaration --emitDeclarationOnly --declarationDir dist ",
+    "generate-single-declarations": "tsc src/Pan.ts --declaration --emitDeclarationOnly --out dist/pan.d.ts"
   },
   "keywords": [],
   "author": "Ariel Saldana",

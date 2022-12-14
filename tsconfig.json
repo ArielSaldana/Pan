@@ -7,8 +7,9 @@
     "sourceMap": true,
     "outDir": "dist",
     "strictNullChecks": true,
-//    "outFile": "dist/pan.js"
-
+    "declaration": true
   },
-  "lib": ["es2015"]
+  "lib": [
+    "es2015"
+  ]
 }
