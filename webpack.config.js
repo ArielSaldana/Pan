@@ -8,8 +8,10 @@ const config = {
     entry: './src/Pan.ts',
     output: {
         path: path.resolve(__dirname, 'dist'),
-        library: 'Pan',
-        libraryTarget: 'var',
+        library: {
+            name: 'Pan',
+            type: 'umd'
+        },
         filename: 'pan.js'
     },
     plugins: [
