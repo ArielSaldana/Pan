@@ -27,7 +27,7 @@ export class AnimationQueue {
 
         if (!found) {
             this.queue.push({
-                key: key,
+                key,
                 callstack: [func]
             })
         }
