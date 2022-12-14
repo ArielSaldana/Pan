@@ -1,15 +1,7 @@
-# 🚀 Welcome to your new awesome project!
+# 🚀 Pan.js
 
-This project has been created using **webpack-cli**, you can now run
+PanJS is a light JS framework used at Unreal to quickly develop web applications.
 
-```
-npm run build
-```
-
-or
-
-```
-yarn build
-```
-
-to bundle your application
+Code functionality includes
+* Event Emitters
+* Animation Queue using RequestAnimationFrame with Auto cleanup

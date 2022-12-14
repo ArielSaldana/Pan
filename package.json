@@ -1,6 +1,6 @@
 {
-  "name": "pan",
-  "version": "0.0.1",
+  "name": "@unreal/pan",
+  "version": "0.0.2",
   "main": "dist/pan.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
