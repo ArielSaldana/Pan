@@ -1,6 +1,6 @@
 {
   "name": "@unreal/pan",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "main": "dist/pan.js",
   "types": "dist/pan.d.ts",
   "scripts": {
