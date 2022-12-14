@@ -22,7 +22,7 @@ jobs:
       - run: npm run webpackBuild --if-present
       - run: npm run build --if-present
       - name: Conf npm ⚙️
-        -run: echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc && cat .npmrc
+        run: echo '//registry.npmjs.org/:_authToken=${NPM_TOKEN}' > .npmrc && cat .npmrc
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
       - name: Publish package on NPM 📦
