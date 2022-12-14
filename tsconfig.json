@@ -2,7 +2,7 @@
   "compilerOptions": {
     "module": "commonjs",
     "esModuleInterop": true,
-    "target": "es6",
+    "target": "esnext",
     "moduleResolution": "node",
     "sourceMap": true,
     "outDir": "dist",
@@ -10,6 +10,6 @@
     "declaration": true
   },
   "lib": [
-    "es2015"
+    "esnext"
   ]
 }
