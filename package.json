@@ -11,7 +11,7 @@
     "lint": "eslint . --ext .ts",
     "lint-fix": "npm run lint -- --fix",
     "generate-declarations": "tsc src/Pan.ts --declaration --emitDeclarationOnly --declarationDir dist ",
-    "generate-single-declarations": "tsc src/Pan.ts --declaration --emitDeclarationOnly --out dist/pan.d.ts"
+    "generate-single-declarations": "tsc src/Pan.ts --declaration --emitDeclarationOnly --out dist/index.d.ts"
   },
   "keywords": [],
   "author": "Ariel Saldana",
