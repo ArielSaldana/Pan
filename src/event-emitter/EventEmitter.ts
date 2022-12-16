@@ -11,7 +11,6 @@ export abstract class EventEmitter {
     beforeOnEventListenerSetup(eventKey: string): void { }
 
     setupEvents(eventKey: string): void {
-        console.log(this.events, eventKey)
         if (this.events.has(eventKey)) {
             this.registerEventListenerFunction(eventKey, {
                 initFunction: this.events.get(eventKey)?.initFunction.bind(this),

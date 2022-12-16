@@ -1,0 +1,39 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <title>Mouse Demo</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Place favicon.ico in the root directory -->
+    <link rel="stylesheet" href="./css/normalize.css">
+    <link rel="stylesheet" href="./css/main.css">
+    <meta name="theme-color" content="#fafafa">
+</head>
+<body>
+<style>
+</style>
+    <div class="mouse-information">
+        <h1>Move your mouse around to see text change</h1>
+        <div id="mouse-info"></div>
+    </div>
+<script src="../../dist/pan.js"></script>
+<script>
+    const mouse = new Pan.Mouse();
+    const mouseInformationDiv = document.getElementById('mouse-info');
+
+    mouse.on('move', (ev) => {
+        mouse.animationQueue.addEvent("background-color", () => {
+            mouseInformationDiv.innerText = JSON.stringify(ev)
+        });
+    })
+
+    mouse.on('click', (ev) => {
+        mouse.animationQueue.addEvent("background-color", () => {
+            mouseInformationDiv.innerText = JSON.stringify(ev)
+        });
+    })
+</script>
+</body>
+</html>
