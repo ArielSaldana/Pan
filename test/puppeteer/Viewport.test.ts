@@ -9,7 +9,7 @@ describe('Test Viewport.ts', () => {
         browser = await puppeteer.launch()
         page = await browser.newPage()
 
-        const url = 'file:///' + path.join(__dirname, '../demo/Viewport.html')
+        const url = 'file:///' + path.join(__dirname, '../demo/viewport.html')
         await page.goto(url)
 
         await page.setViewport({
