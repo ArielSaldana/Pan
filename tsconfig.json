@@ -11,5 +11,7 @@
   },
   "lib": [
     "esnext"
-  ]
+  ],
+    "include": ["src/**/*"],
+    "exclude": ["/dist/", "/test/**/*"]
 }

@@ -23,7 +23,7 @@ describe('Test Viewport.ts', () => {
         expect(rectDivWidth).toBe(1600)
     })
     test('Viewport callback should change div height to match viewport height', async () => {
-        await page.waitForTimeout(10)
+        await page.waitForTimeout(100)
         const rectDiv = await page.$('#rect')
         const rectDivHeight = (await rectDiv.boundingBox()).height
         expect(rectDivHeight).toBe(951)

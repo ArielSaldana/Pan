@@ -53,5 +53,8 @@
       "tsx",
       "js"
     ]
+  },
+  "dependencies": {
+    "circular-dependency-plugin": "^5.2.2"
   }
 }
