@@ -7,6 +7,7 @@ const config = {
     entry: './src/Pan.ts',
     output: {
         path: path.resolve(__dirname, 'dist'),
+        globalObject: 'this',
         library: {
             name: 'Pan',
             type: 'umd'
