@@ -4,14 +4,14 @@
   "main": "dist/pan.js",
   "types": "dist/Pan.d.ts",
   "scripts": {
-    "test": "jest",
     "webpackBuild": "webpack --mode production",
     "webpackWatch": "webpack --watch",
-    "build": "tsc",
     "lint": "eslint . --ext .ts",
     "lint-fix": "npm run lint -- --fix",
     "generate-declarations": "tsc src/Pan.ts --declaration --emitDeclarationOnly --declarationDir dist ",
-    "generate-single-declarations": "tsc src/Pan.ts --declaration --emitDeclarationOnly --out dist/index.d.ts"
+    "generate-single-declarations": "tsc src/Pan.ts --declaration --emitDeclarationOnly --out dist/index.d.ts",
+    "test": "jest",
+    "build": "npm run webpackBuild && npm run generate-single-declarations"
   },
   "keywords": [],
   "author": "Ariel Saldana",
