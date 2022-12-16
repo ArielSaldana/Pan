@@ -1,20 +1,20 @@
 import { EventEmitter } from '../event-emitter/EventEmitter'
 
-export default class Screen extends EventEmitter {
+export default class Viewport extends EventEmitter {
     settings = {
-        isScreenResizeEnabled: false
+        isViewportResizeEnabled: false
     }
 
     override events = new Map(
         Object.entries({
             resize: {
-                initFunction: () => { this.registerScreenResizeListener() },
-                destroyFunction: () => { this.destroyScreenResizeListener() }
+                initFunction: () => { this.registerViewportResizeListener() },
+                destroyFunction: () => { this.destroyViewportResizeListener() }
             }
         })
     )
 
-    screenResize(): void {
+    viewportResize(): void {
         const location = {
             width: window.innerWidth,
             height: window.innerHeight
@@ -22,17 +22,17 @@ export default class Screen extends EventEmitter {
         this.emit('resize', location)
     }
 
-    registerScreenResizeListener(): void {
-        if (!this.settings.isScreenResizeEnabled) {
+    registerViewportResizeListener(): void {
+        if (!this.settings.isViewportResizeEnabled) {
             window.addEventListener('resize', () => {
-                this.screenResize()
+                this.viewportResize()
             })
-            this.settings.isScreenResizeEnabled = true
+            this.settings.isViewportResizeEnabled = true
         }
     }
 
-    destroyScreenResizeListener(): void {
-        window.removeEventListener('resize', this.screenResize)
-        this.settings.isScreenResizeEnabled = false
+    destroyViewportResizeListener(): void {
+        window.removeEventListener('resize', this.viewportResize)
+        this.settings.isViewportResizeEnabled = false
     }
 }

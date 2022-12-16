@@ -1,9 +1,9 @@
 import Mouse from './tools/Mouse'
 import { EventEmitter } from './event-emitter/EventEmitter'
-import Screen from './tools/Screen'
+import Viewport from './tools/Viewport'
 
 export {
     EventEmitter,
     Mouse,
-    Screen
+    Viewport
 }

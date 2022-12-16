@@ -39,11 +39,12 @@
         }
     });
 
-    const screen = new Pan.Screen()
+    const viewport = new Pan.Viewport()
 
-    screen.on("resize", (event) => {
+    viewport.on("resize", (event) => {
         const boxElement = document.getElementById("rect");
         boxElement.style.width = event.width + "px";
+        boxElement.style.height = event.height + "px";
         console.log(event)
     })
 
