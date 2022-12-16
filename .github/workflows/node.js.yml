@@ -23,3 +23,4 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - run: npm ci
       - run: npm run generate-single-declarations --if-present
+      - run: npm run test
