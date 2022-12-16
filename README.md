@@ -5,9 +5,9 @@ PanJS is a light JS framework used at Unreal to quickly develop web applications
 Code functionality includes
 * Event Emitters
 * Animation Queue using RequestAnimationFrame with Auto cleanup
+* Mouse Events
+* Viewport Events
 
-## Running selenium tests locally (MacOS)
+## Running tests locally
 
-1. Download ChromeDriver from this [Link]("https://chromedriver.storage.googleapis.com/index.html?path=109.0.5414.25/")
-2. Open up a terminal and run `sudo nano /etc/paths` and enter the path to the webdriver folder (unzipped), on the last line.
-3. Enter `npm run browser-test` in your command line.
+We have removed selenium and selenium browser dependencies and now use puppeteer + jest as our test suite. Just run `npm run test` to view test results.
