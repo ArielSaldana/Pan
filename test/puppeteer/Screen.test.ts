@@ -1,11 +1,12 @@
 import path from 'path'
 import * as puppeteer from 'puppeteer'
-import { beforeAll, describe, expect, test } from '@jest/globals'
+import { beforeAll, afterAll, describe, expect, test } from '@jest/globals'
 
 describe('Test Screen.ts', () => {
     let page
+    let browser
     beforeAll(async () => {
-        const browser = await puppeteer.launch()
+        browser = await puppeteer.launch()
         page = await browser.newPage()
 
         const url = 'file:///' + path.join(__dirname, '../demo/Screen.html')
@@ -21,5 +22,9 @@ describe('Test Screen.ts', () => {
         const rectDivWidth = (await rectDiv.boundingBox()).width
 
         expect(rectDivWidth).toBe(1600)
+    })
+    afterAll(done => {
+        browser.close()
+        done()
     })
 })
