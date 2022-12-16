@@ -10,11 +10,13 @@ export default class Mouse extends EventEmitter {
         Object.entries({
             move: {
                 initFunction: () => { this.registerMouseMoveEventListener() },
-                destroyFunction: () => { this.destroyMouseMoveEventListener() }
+                destroyFunction: () => { this.destroyMouseMoveEventListener() },
+                callbacks: []
             },
             click: {
                 initFunction: () => { this.registerMouseClickEventListener() },
-                destroyFunction: () => { this.destroyMouseClickEventListener() }
+                destroyFunction: () => { this.destroyMouseClickEventListener() },
+                callbacks: []
             }
         })
     )

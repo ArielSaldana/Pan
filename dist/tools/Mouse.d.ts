@@ -7,9 +7,11 @@ export default class Mouse extends EventEmitter {
     events: Map<string, {
         initFunction: () => void;
         destroyFunction: () => void;
+        callbacks: never[];
     } | {
         initFunction: () => void;
         destroyFunction: () => void;
+        callbacks: never[];
     }>;
     mouseMove(eventInformation: any): void;
     mouseClick(eventInformation: any): void;

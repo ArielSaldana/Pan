@@ -1,15 +1,24 @@
 import { EventEmitter } from '../event-emitter/EventEmitter'
 
 export default class Viewport extends EventEmitter {
+    public static instance: Viewport
     settings = {
         isViewportResizeEnabled: false
+    }
+
+    public static getInstance(): Viewport {
+        if (Viewport.instance === undefined) {
+            Viewport.instance = new Viewport()
+        }
+        return Viewport.instance
     }
 
     override events = new Map(
         Object.entries({
             resize: {
                 initFunction: () => { this.registerViewportResizeListener() },
-                destroyFunction: () => { this.destroyViewportResizeListener() }
+                destroyFunction: () => { this.destroyViewportResizeListener() },
+                callbacks: []
             }
         })
     )

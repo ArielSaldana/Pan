@@ -1,16 +1,11 @@
-import { EventFunctions } from './EventFunctions';
+import { Event } from './Event';
 import { AnimationQueue } from '../animation-queue/AnimationQueue';
 export declare abstract class EventEmitter {
     animationQueue: AnimationQueue;
-    eventMap: Map<any, any>;
-    functionsMap: Map<string, EventFunctions>;
-    abstract events: Map<string, EventFunctions>;
-    beforeOnEventListenerSetup(eventKey: string): void;
-    setupEvents(eventKey: string): void;
-    internalEmit(eventKey: string, eventInformation: object): void;
-    internalOn(eventKey: string, eventCallback: Object): void;
+    abstract events: Map<string, Event>;
+    isEventKeyIsValid(eventKey: string): boolean;
+    isEventInitialized(eventKey: string): boolean;
+    getEvent(eventKey: string): Event;
+    on(eventKey: string, eventCallback: Function): void;
     emit(eventKey: string, eventInformation: object): void;
-    on(eventKey: string, eventCallback: Object): void;
-    registerEventListenerFunction(eventKey: string, eventFunction: EventFunctions): void;
-    destroyEventEmitterFunction(eventKey: string): void;
 }
