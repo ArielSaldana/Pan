@@ -6,15 +6,25 @@ export default class Mouse extends EventEmitter {
         isMouseClickEnabled: false
     }
 
+    public static instance: Mouse
+    public static getInstance(): Mouse {
+        if (Mouse.instance === undefined) {
+            Mouse.instance = new Mouse()
+        }
+        return Mouse.instance
+    }
+
     override events = new Map(
         Object.entries({
             move: {
                 initFunction: () => { this.registerMouseMoveEventListener() },
-                destroyFunction: () => { this.destroyMouseMoveEventListener() }
+                destroyFunction: () => { this.destroyMouseMoveEventListener() },
+                callbacks: []
             },
             click: {
                 initFunction: () => { this.registerMouseClickEventListener() },
-                destroyFunction: () => { this.destroyMouseClickEventListener() }
+                destroyFunction: () => { this.destroyMouseClickEventListener() },
+                callbacks: []
             }
         })
     )

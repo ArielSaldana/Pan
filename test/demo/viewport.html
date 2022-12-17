@@ -25,21 +25,9 @@
 <!-- Add your site or application content here -->
 <script src="../../dist/pan.js"></script>
 <script>
-    // Mouse Events
-    const mouse = new Pan.Mouse();
-    mouse.on("move", (event) => {
-        if (event.x > 500) {
-            mouse.animationQueue.addEvent("background-color", () => {
-                document.body.style.backgroundColor = "rgba(255,0,0,.1)"
-            })
-        } else {
-            mouse.animationQueue.addEvent("background-color", () => {
-                document.body.style.backgroundColor = "rgba(0,0,255,.1)"
-            })
-        }
-    });
-
-    const viewport = new Pan.Viewport()
+    const viewport = Pan.Viewport.getInstance({
+        fireViewportInformationOnListen: true
+    })
 
     viewport.on("resize", (event) => {
         const boxElement = document.getElementById("rect");
@@ -48,9 +36,25 @@
         console.log(event)
     })
 
-    mouse.on("click", (event) => {
-        console.log(event)
-    });
+        const viewport2 = Pan.Viewport.getInstance();
+        const viewport3 = Pan.Viewport.getInstance();
+
+        viewport2.on("resize", () => {
+            let myPromise = new Promise(function(myResolve, myReject) {
+                setTimeout(function() { myResolve("I love You !!"); }, 3000);
+            });
+            myPromise.then((value) => {
+                console.log('screen resized 2', value)
+            })
+        })
+
+        viewport3.on("resize", (event) => {
+            console.log('screen resized 3');
+        })
+
+        viewport3.on("resize", () => {
+            console.log('screen resized 4');
+        })
 
     //custom event emitter being created with class instantiation
     //  const em = new Pan.EventEmitter();

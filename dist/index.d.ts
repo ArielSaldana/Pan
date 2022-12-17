@@ -1,7 +1,8 @@
-declare module "event-emitter/EventFunctions" {
-    export interface EventFunctions {
+declare module "event-emitter/Event" {
+    export interface Event {
         initFunction: () => void;
         destroyFunction: () => void;
+        callbacks: Function[];
     }
 }
 declare module "animation-queue/RequestAnimationFrameState" {
@@ -41,21 +42,18 @@ declare module "animation-queue/AnimationQueue" {
     }
 }
 declare module "event-emitter/EventEmitter" {
-    import { EventFunctions } from "event-emitter/EventFunctions";
+    import { Event } from "event-emitter/Event";
     import { AnimationQueue } from "animation-queue/AnimationQueue";
     export abstract class EventEmitter {
         animationQueue: AnimationQueue;
-        eventMap: Map<any, any>;
-        functionsMap: Map<string, EventFunctions>;
-        abstract events: Map<string, EventFunctions>;
-        beforeOnEventListenerSetup(eventKey: string): void;
-        setupEvents(eventKey: string): void;
-        internalEmit(eventKey: string, eventInformation: object): void;
-        internalOn(eventKey: string, eventCallback: Object): void;
+        abstract events: Map<string, Event>;
+        isEventKeyIsValid(eventKey: string): boolean;
+        isEventInitialized(eventKey: string): boolean;
+        getEvent(eventKey: string): Event;
+        on(eventKey: string, eventCallback: Function): void;
+        off(eventKey: any): void;
         emit(eventKey: string, eventInformation: object): void;
-        on(eventKey: string, eventCallback: Object): void;
-        registerEventListenerFunction(eventKey: string, eventFunction: EventFunctions): void;
-        destroyEventEmitterFunction(eventKey: string): void;
+        afterListenerConfigured(callback: Function): void;
     }
 }
 declare module "tools/Mouse" {
@@ -65,12 +63,16 @@ declare module "tools/Mouse" {
             isMouseOnMoveEnabled: boolean;
             isMouseClickEnabled: boolean;
         };
+        static instance: Mouse;
+        static getInstance(): Mouse;
         events: Map<string, {
             initFunction: () => void;
             destroyFunction: () => void;
+            callbacks: any[];
         } | {
             initFunction: () => void;
             destroyFunction: () => void;
+            callbacks: any[];
         }>;
         mouseMove(eventInformation: any): void;
         mouseClick(eventInformation: any): void;
@@ -80,19 +82,31 @@ declare module "tools/Mouse" {
         destroyMouseClickEventListener(): void;
     }
 }
+declare module "tools/ViewportSettings" {
+    export interface ViewportSettings {
+        fireViewportInformationOnListen: boolean;
+    }
+}
 declare module "tools/Viewport" {
     import { EventEmitter } from "event-emitter/EventEmitter";
+    import { ViewportSettings } from "tools/ViewportSettings";
     export default class Viewport extends EventEmitter {
-        settings: {
+        state: {
             isViewportResizeEnabled: boolean;
         };
+        settings: ViewportSettings;
+        private constructor();
+        static instance: Viewport;
+        static getInstance(options?: ViewportSettings): Viewport;
         events: Map<string, {
             initFunction: () => void;
             destroyFunction: () => void;
+            callbacks: any[];
         }>;
         viewportResize(): void;
         registerViewportResizeListener(): void;
         destroyViewportResizeListener(): void;
+        afterListenerConfigured(callback: Function): void;
     }
 }
 declare module "Pan" {

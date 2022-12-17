@@ -1,15 +1,39 @@
 import { EventEmitter } from '../event-emitter/EventEmitter'
+import { ViewportSettings } from './ViewportSettings'
 
 export default class Viewport extends EventEmitter {
-    settings = {
+    state = {
         isViewportResizeEnabled: false
+    }
+
+    settings: ViewportSettings = {
+        fireViewportInformationOnListen: false
+    }
+
+    private constructor (options?: ViewportSettings) {
+        super()
+        if (options !== undefined) {
+            this.settings = {
+                ...this.settings,
+                ...options
+            }
+        }
+    }
+
+    public static instance: Viewport
+    public static getInstance(options?: ViewportSettings): Viewport {
+        if (Viewport.instance === undefined) {
+            Viewport.instance = new Viewport(options)
+        }
+        return Viewport.instance
     }
 
     override events = new Map(
         Object.entries({
             resize: {
                 initFunction: () => { this.registerViewportResizeListener() },
-                destroyFunction: () => { this.destroyViewportResizeListener() }
+                destroyFunction: () => { this.destroyViewportResizeListener() },
+                callbacks: []
             }
         })
     )
@@ -23,16 +47,26 @@ export default class Viewport extends EventEmitter {
     }
 
     registerViewportResizeListener(): void {
-        if (!this.settings.isViewportResizeEnabled) {
+        if (!this.state.isViewportResizeEnabled) {
             window.addEventListener('resize', () => {
                 this.viewportResize()
             })
-            this.settings.isViewportResizeEnabled = true
+            this.state.isViewportResizeEnabled = true
         }
     }
 
     destroyViewportResizeListener(): void {
         window.removeEventListener('resize', this.viewportResize)
-        this.settings.isViewportResizeEnabled = false
+        this.state.isViewportResizeEnabled = false
+    }
+
+    override afterListenerConfigured(callback: Function): void {
+        if (this.settings.fireViewportInformationOnListen) {
+            const location = {
+                width: window.innerWidth,
+                height: window.innerHeight
+            }
+            callback(location)
+        }
     }
 }
