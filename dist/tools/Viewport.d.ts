@@ -1,14 +1,13 @@
 import { EventEmitter } from '../event-emitter/EventEmitter';
+import { ViewportSettings } from './ViewportSettings';
 export default class Viewport extends EventEmitter {
     state: {
         isViewportResizeEnabled: boolean;
     };
-    settings: {
-        fireViewportInformationOnListen: boolean;
-    };
+    settings: ViewportSettings;
     private constructor();
     static instance: Viewport;
-    static getInstance(options?: any): Viewport;
+    static getInstance(options?: ViewportSettings): Viewport;
     events: Map<string, {
         initFunction: () => void;
         destroyFunction: () => void;

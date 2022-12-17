@@ -48,6 +48,7 @@ export abstract class EventEmitter {
                 // TODO: perf this to check performance vs event.callbacks.length = 0 | events.callbacks = []
                 event.callbacks.pop()
             }
+            event.destroyFunction()
         }
     }
 
