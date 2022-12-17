@@ -4,6 +4,8 @@ export default class Mouse extends EventEmitter {
         isMouseOnMoveEnabled: boolean;
         isMouseClickEnabled: boolean;
     };
+    static instance: Mouse;
+    static getInstance(): Mouse;
     events: Map<string, {
         initFunction: () => void;
         destroyFunction: () => void;

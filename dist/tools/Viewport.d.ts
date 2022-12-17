@@ -1,9 +1,9 @@
 import { EventEmitter } from '../event-emitter/EventEmitter';
 export default class Viewport extends EventEmitter {
-    static instance: Viewport;
     settings: {
         isViewportResizeEnabled: boolean;
     };
+    static instance: Viewport;
     static getInstance(): Viewport;
     events: Map<string, {
         initFunction: () => void;

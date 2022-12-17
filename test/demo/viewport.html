@@ -25,24 +25,6 @@
 <!-- Add your site or application content here -->
 <script src="../../dist/pan.js"></script>
 <script>
-    // Mouse Events
-//    const mouse = new Pan.Mouse();
-//    mouse.on("move", (event) => {
-//        if (event.x > 500) {
-//            mouse.animationQueue.addEvent("background-color", () => {
-//                document.body.style.backgroundColor = "rgba(255,0,0,.1)"
-//            })
-//        } else {
-//            mouse.animationQueue.addEvent("background-color", () => {
-//                document.body.style.backgroundColor = "rgba(0,0,255,.1)"
-//            })
-//        }
-//    });
-//
-//    mouse.on("click", (event) => {
-//        console.log(event)
-//    });
-
     const viewport = Pan.Viewport.getInstance()
 
     viewport.on("resize", (event) => {
@@ -52,14 +34,24 @@
         console.log(event)
     })
 
+        const t = new Promise((resolve) => {
+            for (let i = 0; i < 2000000000; i++) {}
+            resolve()
+        })
+
         const viewport2 = Pan.Viewport.getInstance();
         const viewport3 = Pan.Viewport.getInstance();
         //
         viewport2.on("resize", () => {
-            console.log('screen resized 2');
+            let myPromise = new Promise(function(myResolve, myReject) {
+                setTimeout(function() { myResolve("I love You !!"); }, 3000);
+            });
+            myPromise.then((value) => {
+                console.log('screen resized 2', value)
+            })
         })
 
-        viewport3.on("resize", () => {
+        viewport3.on("resize", (event) => {
             console.log('screen resized 3');
         })
 

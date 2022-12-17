@@ -7,5 +7,6 @@ export declare abstract class EventEmitter {
     isEventInitialized(eventKey: string): boolean;
     getEvent(eventKey: string): Event;
     on(eventKey: string, eventCallback: Function): void;
+    off(eventKey: any): void;
     emit(eventKey: string, eventInformation: object): void;
 }

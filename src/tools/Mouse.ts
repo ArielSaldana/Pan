@@ -6,6 +6,14 @@ export default class Mouse extends EventEmitter {
         isMouseClickEnabled: false
     }
 
+    public static instance: Mouse
+    public static getInstance(): Mouse {
+        if (Mouse.instance === undefined) {
+            Mouse.instance = new Mouse()
+        }
+        return Mouse.instance
+    }
+
     override events = new Map(
         Object.entries({
             move: {
