@@ -18,6 +18,7 @@ describe('Test Viewport.ts', () => {
         })
     })
     test('Viewport callback should change div width to match viewport width', async () => {
+        await page.waitForTimeout(100)
         const rectDiv = await page.$('#rect')
         const rectDivWidth = (await rectDiv.boundingBox()).width
         expect(rectDivWidth).toBe(1600)
