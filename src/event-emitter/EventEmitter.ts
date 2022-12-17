@@ -51,7 +51,6 @@ export abstract class EventEmitter {
     }
 
     emit(eventKey: string, eventInformation: object): void {
-        console.log(this.events)
         if (this.isEventKeyIsValid(eventKey)) {
             this.getEvent(eventKey).callbacks.forEach((callback) => {
                 callback(eventInformation)
