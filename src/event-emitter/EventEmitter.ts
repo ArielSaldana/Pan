@@ -34,6 +34,7 @@ export abstract class EventEmitter {
             event.initFunction()
         }
         event.callbacks.push(eventCallback)
+        this.afterListenerConfigured(eventCallback)
     }
 
     off(eventKey): void {
@@ -57,4 +58,7 @@ export abstract class EventEmitter {
             })
         }
     }
+
+    // lifecycle methods
+    afterListenerConfigured(callback: Function): void { }
 }

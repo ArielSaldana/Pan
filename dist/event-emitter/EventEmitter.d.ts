@@ -9,4 +9,5 @@ export declare abstract class EventEmitter {
     on(eventKey: string, eventCallback: Function): void;
     off(eventKey: any): void;
     emit(eventKey: string, eventInformation: object): void;
+    afterListenerConfigured(callback: Function): void;
 }

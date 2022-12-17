@@ -25,7 +25,9 @@
 <!-- Add your site or application content here -->
 <script src="../../dist/pan.js"></script>
 <script>
-    const viewport = Pan.Viewport.getInstance()
+    const viewport = Pan.Viewport.getInstance({
+        fireViewportInformationOnListen: true
+    })
 
     viewport.on("resize", (event) => {
         const boxElement = document.getElementById("rect");
@@ -34,14 +36,9 @@
         console.log(event)
     })
 
-        const t = new Promise((resolve) => {
-            for (let i = 0; i < 2000000000; i++) {}
-            resolve()
-        })
-
         const viewport2 = Pan.Viewport.getInstance();
         const viewport3 = Pan.Viewport.getInstance();
-        //
+
         viewport2.on("resize", () => {
             let myPromise = new Promise(function(myResolve, myReject) {
                 setTimeout(function() { myResolve("I love You !!"); }, 3000);
