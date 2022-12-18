@@ -1,4 +1,4 @@
-import { EventEmitter } from '../event-emitter/EventEmitter'
+import { EventEmitter } from '../../event-emitter/EventEmitter'
 
 export default class Mouse extends EventEmitter {
     settings = {

@@ -1,4 +1,5 @@
-import Mouse from './tools/Mouse';
+import Mouse from './tools/mouse/Mouse';
 import { EventEmitter } from './event-emitter/EventEmitter';
-import Viewport from './tools/Viewport';
-export { EventEmitter, Mouse, Viewport };
+import Viewport from './tools/viewport/Viewport';
+import Ticker from './tools/ticker/Ticker';
+export { EventEmitter, Mouse, Viewport, Ticker };

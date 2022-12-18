@@ -1,7 +1,7 @@
 declare module "event-emitter/Event" {
     export interface Event {
-        initFunction: () => void;
-        destroyFunction: () => void;
+        initFunction?: () => void;
+        destroyFunction?: () => void;
         callbacks: Function[];
     }
 }
@@ -56,7 +56,7 @@ declare module "event-emitter/EventEmitter" {
         afterListenerConfigured(callback: Function): void;
     }
 }
-declare module "tools/Mouse" {
+declare module "tools/mouse/Mouse" {
     import { EventEmitter } from "event-emitter/EventEmitter";
     export default class Mouse extends EventEmitter {
         settings: {
@@ -82,14 +82,14 @@ declare module "tools/Mouse" {
         destroyMouseClickEventListener(): void;
     }
 }
-declare module "tools/ViewportSettings" {
+declare module "tools/viewport/ViewportSettings" {
     export interface ViewportSettings {
         fireViewportInformationOnListen: boolean;
     }
 }
-declare module "tools/Viewport" {
+declare module "tools/viewport/Viewport" {
     import { EventEmitter } from "event-emitter/EventEmitter";
-    import { ViewportSettings } from "tools/ViewportSettings";
+    import { ViewportSettings } from "tools/viewport/ViewportSettings";
     export default class Viewport extends EventEmitter {
         state: {
             isViewportResizeEnabled: boolean;
@@ -109,9 +109,32 @@ declare module "tools/Viewport" {
         afterListenerConfigured(callback: Function): void;
     }
 }
-declare module "Pan" {
-    import Mouse from "tools/Mouse";
+declare module "tools/ticker/TickerState" {
+    export interface TickerState {
+        hasTickerStarted: boolean;
+        startTime?: Date;
+        previousTick?: Date;
+    }
+}
+declare module "tools/ticker/Ticker" {
     import { EventEmitter } from "event-emitter/EventEmitter";
-    import Viewport from "tools/Viewport";
-    export { EventEmitter, Mouse, Viewport };
+    import { TickerState } from "tools/ticker/TickerState";
+    export default class Ticker extends EventEmitter {
+        state: TickerState;
+        events: Map<string, {
+            initFunction: () => void;
+            destroyFunction: any;
+            callbacks: any[];
+        }>;
+        constructor();
+        tick(): void;
+        after(elapsedTime: number, callback: any): void;
+    }
+}
+declare module "Pan" {
+    import Mouse from "tools/mouse/Mouse";
+    import { EventEmitter } from "event-emitter/EventEmitter";
+    import Viewport from "tools/viewport/Viewport";
+    import Ticker from "tools/ticker/Ticker";
+    export { EventEmitter, Mouse, Viewport, Ticker };
 }

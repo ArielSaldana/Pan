@@ -1,5 +1,5 @@
 export interface Event {
-    initFunction: () => void;
-    destroyFunction: () => void;
+    initFunction?: () => void;
+    destroyFunction?: () => void;
     callbacks: Function[];
 }
