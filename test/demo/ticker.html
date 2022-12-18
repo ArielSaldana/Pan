@@ -1,0 +1,35 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <title>Mouse Demo</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Place favicon.ico in the root directory -->
+    <link rel="stylesheet" href="./css/normalize.css">
+    <link rel="stylesheet" href="./css/main.css">
+    <meta name="theme-color" content="#fafafa">
+</head>
+<body>
+<style>
+</style>
+<div class="ticker-information">
+    <h1>Move your mouse around to see text change</h1>
+    <div id="mouse-info"></div>
+</div>
+<script src="../../dist/pan.js"></script>
+<script>
+    const ticker = new Pan.Ticker();
+    const tickerInformationDiv = document.getElementById('ticker-info');
+
+    ticker.on('tick', (ev) => {
+        console.log(ev)
+    })
+
+    ticker.after(500, () => {
+
+    })
+</script>
+</body>
+</html>

@@ -1,4 +1,4 @@
-import { EventEmitter } from '../event-emitter/EventEmitter'
+import { EventEmitter } from '../../event-emitter/EventEmitter'
 import { ViewportSettings } from './ViewportSettings'
 
 export default class Viewport extends EventEmitter {
