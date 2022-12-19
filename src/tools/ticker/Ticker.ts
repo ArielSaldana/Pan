@@ -17,47 +17,64 @@
  *
  */
 
-import {EventEmitter} from "../../event-emitter/EventEmitter";
-import {TickerState} from "./TickerState";
+import { EventEmitter } from '../../event-emitter/EventEmitter'
+import { TickerState } from './TickerState'
+import TickerEventList from './TickerEventList'
 
 export default class Ticker extends EventEmitter {
-
     state: TickerState = {
         hasTickerStarted: false,
+        ticks: 0
     }
+
+    tickerEventList: TickerEventList = new TickerEventList()
+
     override events = new Map(
         Object.entries({
             tick: {
-                initFunction: () => { this.tick() },
+                initFunction: () => { requestAnimationFrame(this.tick.bind(this)) },
                 destroyFunction: undefined,
                 callbacks: []
             }
         })
     )
 
-    constructor() {
-        super();
-    }
-
-    tick() {
+    tick(currentTime): void {
         if (!this.state.hasTickerStarted) {
             this.state.previousTick = new Date()
             this.state.startTime = this.state.previousTick
             this.state.hasTickerStarted = true
+            this.state.previousTimeStamp = currentTime
         }
 
-        if (this.state.previousTick) {
+        if (this.state.previousTick != null) {
             const currentDate = new Date()
             const delta = currentDate.getTime() - this.state.previousTick.getTime()
+            const delta2 = currentTime - this.state.previousTimeStamp
             this.emit('tick', {
-                delta: delta
+                delta,
+                delta2
             })
             this.state.previousTick = currentDate
         }
+
+        const it = this.tickerEventList.getAllReadyToExecute()
+        let result = it.next()
+        while (result.done !== true) {
+            result.value.callback()
+            result = it.next()
+        }
+
+        this.state.previousTimeStamp = currentTime
         requestAnimationFrame(this.tick.bind(this))
     }
 
-    after(elapsedTime: number, callback) {
-
+    after(elapsedTime: number, callback): void {
+        const executeBy = new Date()
+        executeBy.setMilliseconds(executeBy.getMilliseconds() + elapsedTime)
+        this.tickerEventList.addNode({
+            executeBy,
+            callback
+        })
     }
 }

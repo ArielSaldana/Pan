@@ -114,20 +114,40 @@ declare module "tools/ticker/TickerState" {
         hasTickerStarted: boolean;
         startTime?: Date;
         previousTick?: Date;
+        ticks: number;
+        previousTimeStamp?: any;
+    }
+}
+declare module "tools/ticker/TickerNode" {
+    export default interface TickerNode {
+        next?: TickerNode;
+        executeBy: Date;
+        callback: Function;
+    }
+}
+declare module "tools/ticker/TickerEventList" {
+    import TickerNode from "tools/ticker/TickerNode";
+    export default class TickerEventList {
+        root: TickerNode | undefined;
+        length: number;
+        addNode(node: TickerNode): void;
+        getAllReadyToExecute(): Generator<TickerNode>;
+        clean(): void;
     }
 }
 declare module "tools/ticker/Ticker" {
     import { EventEmitter } from "event-emitter/EventEmitter";
     import { TickerState } from "tools/ticker/TickerState";
+    import TickerEventList from "tools/ticker/TickerEventList";
     export default class Ticker extends EventEmitter {
         state: TickerState;
+        tickerEventList: TickerEventList;
         events: Map<string, {
             initFunction: () => void;
             destroyFunction: any;
             callbacks: any[];
         }>;
-        constructor();
-        tick(): void;
+        tick(currentTime: any): void;
         after(elapsedTime: number, callback: any): void;
     }
 }

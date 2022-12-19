@@ -1,4 +1,4 @@
-import TickerNode from "./TickerNode";
+import TickerNode from './TickerNode'
 
 export default class TickerEventList {
     root: TickerNode | undefined = undefined
@@ -10,7 +10,7 @@ export default class TickerEventList {
             return
         }
 
-        let lastNode: TickerNode | undefined = undefined
+        let lastNode: TickerNode | undefined
         let currNode: TickerNode | undefined = this.root
         while (currNode !== undefined) {
             if (node.executeBy.getTime() < currNode.executeBy.getTime()) {
@@ -29,7 +29,24 @@ export default class TickerEventList {
         }
     }
 
-    clean() {
+    * getAllReadyToExecute(): Generator<TickerNode> {
+        if (this.root === undefined) {
+            return undefined
+        } else {
+            const currentTime = new Date()
+            let currNode: TickerNode | undefined = this.root
+            while (currNode !== undefined) {
+                if (currentTime.getTime() >= currNode.executeBy.getTime()) {
+                    console.log(currentTime.getTime(), currNode.executeBy.getTime())
+                    this.root = currNode.next
+                    yield currNode
+                }
+                currNode = currNode.next
+            }
+        }
+    }
+
+    clean(): void {
         this.root = undefined
     }
 }

@@ -23,13 +23,18 @@
     const ticker = new Pan.Ticker();
     const tickerInformationDiv = document.getElementById('ticker-info');
 
+    const currentDate = new Date()
+     ticker.after(5000, () => {
+         const thisDate = new Date()
+         console.log((thisDate.getTime() - currentDate.getTime()) /1000)
+         console.log('meow')
+     })
+
     ticker.on('tick', (ev) => {
         console.log(ev)
     })
 
-    ticker.after(500, () => {
 
-    })
 </script>
 </body>
 </html>
