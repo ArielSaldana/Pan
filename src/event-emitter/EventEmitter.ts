@@ -31,7 +31,7 @@ export abstract class EventEmitter {
 
         const event = this.getEvent(eventKey)
         if (!this.isEventInitialized(eventKey)) {
-            if (event.initFunction) {
+            if (event.initFunction != null) {
                 event.initFunction()
             }
         }
@@ -50,7 +50,7 @@ export abstract class EventEmitter {
                 // TODO: perf this to check performance vs event.callbacks.length = 0 | events.callbacks = []
                 event.callbacks.pop()
             }
-            if (event.destroyFunction) {
+            if (event.destroyFunction != null) {
                 event.destroyFunction()
             }
         }
