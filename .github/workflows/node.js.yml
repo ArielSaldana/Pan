@@ -2,9 +2,15 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [
+      main,
+      '^\d.*'
+    ]
   pull_request:
-    branches: [ main ]
+    branches: [
+      main,
+      '^\d.*'
+    ]
 
 jobs:
   build:
