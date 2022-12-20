@@ -27,11 +27,17 @@
      ticker.after(5000, () => {
          const thisDate = new Date()
          console.log((thisDate.getTime() - currentDate.getTime()) /1000)
-         console.log('meow')
+         console.log('after 5 seconds')
      })
 
+    ticker.afterSeconds(10, () => {
+        const thisDate = new Date()
+        console.log((thisDate.getTime() - currentDate.getTime()) /1000)
+        console.log('after 10 Seconds')
+    })
+
     ticker.on('tick', (ev) => {
-        console.log(ev)
+//        console.log(ev)
     })
 
 

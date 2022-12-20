@@ -13,7 +13,7 @@ export default class TickerEventList {
         let lastNode: TickerNode | undefined
         let currNode: TickerNode | undefined = this.root
         while (currNode !== undefined) {
-            if (node.executeBy.getTime() < currNode.executeBy.getTime()) {
+            if (node.executeBy < currNode.executeBy) {
                 if (lastNode !== undefined) {
                     lastNode.next = node
                 } else {
@@ -33,11 +33,10 @@ export default class TickerEventList {
         if (this.root === undefined) {
             return undefined
         } else {
-            const currentTime = new Date()
+            const currentTime = Date.now()
             let currNode: TickerNode | undefined = this.root
             while (currNode !== undefined) {
-                if (currentTime.getTime() >= currNode.executeBy.getTime()) {
-                    console.log(currentTime.getTime(), currNode.executeBy.getTime())
+                if (currentTime >= currNode.executeBy) {
                     this.root = currNode.next
                     yield currNode
                 }

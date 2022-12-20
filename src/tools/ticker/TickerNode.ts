@@ -1,5 +1,5 @@
 export default interface TickerNode {
     next?: TickerNode
-    executeBy: Date
+    executeBy: Number
     callback: Function
 }
