@@ -1,7 +1,6 @@
 export interface TickerState {
     hasTickerStarted: boolean
-    startTime?: Date
-    previousTick?: Date
+    startTime?: number
     ticks: number
-    previousTimeStamp?: any
+    previousTickTimeStamp: number
 }

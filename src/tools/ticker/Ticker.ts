@@ -24,7 +24,8 @@ import TickerEventList from './TickerEventList'
 export default class Ticker extends EventEmitter {
     state: TickerState = {
         hasTickerStarted: false,
-        ticks: 0
+        ticks: 0,
+        previousTickTimeStamp: 0
     }
 
     tickerEventList: TickerEventList = new TickerEventList()
@@ -32,7 +33,12 @@ export default class Ticker extends EventEmitter {
     override events = new Map(
         Object.entries({
             tick: {
-                initFunction: () => { requestAnimationFrame(this.tick.bind(this)) },
+                initFunction: () => {
+                    const currentDate = new Date()
+                    this.state.startTime = currentDate.getTime()
+                    this.state.hasTickerStarted = true
+                    requestAnimationFrame(this.tick.bind(this))
+                },
                 destroyFunction: undefined,
                 callbacks: []
             }
@@ -40,23 +46,11 @@ export default class Ticker extends EventEmitter {
     )
 
     tick(currentTime): void {
-        if (!this.state.hasTickerStarted) {
-            this.state.previousTick = new Date()
-            this.state.startTime = this.state.previousTick
-            this.state.hasTickerStarted = true
-            this.state.previousTimeStamp = currentTime
-        }
-
-        if (this.state.previousTick != null) {
-            const currentDate = new Date()
-            const delta = currentDate.getTime() - this.state.previousTick.getTime()
-            const delta2 = currentTime - this.state.previousTimeStamp
-            this.emit('tick', {
-                delta,
-                delta2
-            })
-            this.state.previousTick = currentDate
-        }
+        const delta = currentTime - this.state.previousTickTimeStamp
+        this.state.previousTickTimeStamp = currentTime
+        this.emit('tick', {
+            delta
+        })
 
         const it = this.tickerEventList.getAllReadyToExecute()
         let result = it.next()
@@ -64,8 +58,6 @@ export default class Ticker extends EventEmitter {
             result.value.callback()
             result = it.next()
         }
-
-        this.state.previousTimeStamp = currentTime
         requestAnimationFrame(this.tick.bind(this))
     }
 
