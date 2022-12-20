@@ -2,9 +2,15 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [
+      main,
+      '^\d.*'
+    ]
   pull_request:
-    branches: [ main ]
+    branches: [
+      main,
+      '^\d.*'
+    ]
 
 jobs:
   build:
@@ -24,3 +30,8 @@ jobs:
       - run: npm ci
       - run: npm run build --if-present
       - run: npm run test
+      - name: Archive dist files
+        uses: actions/upload-artifact@v3
+        with:
+            name: dist
+            path: dist/**/*
