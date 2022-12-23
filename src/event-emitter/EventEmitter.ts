@@ -56,10 +56,10 @@ export abstract class EventEmitter {
         }
     }
 
-    emit(eventKey: string, eventInformation: object): void {
+    emit(eventKey: string, ...eventInformation): void {
         if (this.isEventKeyIsValid(eventKey)) {
             this.getEvent(eventKey).callbacks.forEach((callback) => {
-                callback(eventInformation)
+                callback(eventInformation[0], eventInformation[1])
             })
         }
     }
