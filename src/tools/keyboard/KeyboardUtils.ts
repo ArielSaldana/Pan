@@ -203,7 +203,7 @@ export default class KeyboardUtils {
                     defaultKeyInformation.isAlphanumeric = true
                 }
 
-                if (this.numericKeys.includes(item)) {
+                if (this.numpadNumericKeys.includes(item)) {
                     defaultKeyInformation.isNumpad = true
                 }
 
