@@ -1,22 +1,50 @@
 import { EventEmitter } from '../../event-emitter/EventEmitter'
+import KeyboardSettings from './KeyboardSettings'
 
 export default class Keyboard extends EventEmitter {
-    settings = {
-        isMouseOnMoveEnabled: false,
-        isMouseClickEnabled: false
+    settings: KeyboardSettings = {
+        allowLetters: true,
+        allowNumbers: true,
+        allowSpecialCharacters: true
+    }
+
+    constructor (keyboardSettings: Object) {
+        super()
+        this.configureSettings(keyboardSettings)
+    }
+
+    configureSettings(keyboardSettings): void {
+        if (keyboardSettings !== undefined) {
+            this.settings = {
+                allowLetters: keyboardSettings.get('allowLetters') !== undefined ? keyboardSettings.get('allowLetters') : true,
+                allowNumbers: keyboardSettings.get('allowNumbers') !== undefined ? keyboardSettings.get('allowNumbers') : true,
+                allowSpecialCharacters: keyboardSettings.get('allowSpecialCharacters') !== undefined ? keyboardSettings.get('allowSpecialCharacters') : true
+            }
+        }
     }
 
     public static instance: Keyboard
 
-    public static getInstance (): Keyboard {
+    public static getInstance (keyboardSettings: Object): Keyboard {
         if (Keyboard.instance === undefined) {
-            Keyboard.instance = new Keyboard()
+            Keyboard.instance = new Keyboard(keyboardSettings)
         }
         return Keyboard.instance
     }
 
     override events = new Map(
         Object.entries({
+            all: {
+                initFunction: () => {
+                    this.registerKeyDownEventListener()
+                    this.registerKeyUpEventListener()
+                },
+                destroyFunction: () => {
+                    this.destroyKeyDownEventListener()
+                    this.destroyKeyUpEventListener()
+                },
+                callbacks: []
+            },
             keydown: {
                 initFunction: () => {
                     this.registerKeyDownEventListener()
@@ -39,35 +67,27 @@ export default class Keyboard extends EventEmitter {
     )
 
     keyHit (eventInformation): void {
-        console.log(eventInformation)
-        this.emit('keyboard', eventInformation)
+        this.emit(eventInformation.type, eventInformation.key, eventInformation)
+        this.emit('all', eventInformation.key, eventInformation)
     }
 
     registerKeyDownEventListener (): void {
-        if (!this.settings.isMouseOnMoveEnabled) {
-            window.addEventListener('keydown', (ev) => {
-                this.keyHit(ev)
-            })
-            this.settings.isMouseOnMoveEnabled = true
-        }
+        window.addEventListener('keydown', (ev) => {
+            this.keyHit(ev)
+        })
     }
 
     destroyKeyDownEventListener (): void {
         window.removeEventListener('keydown', this.keyHit)
-        this.settings.isMouseOnMoveEnabled = false
     }
 
     registerKeyUpEventListener (): void {
-        if (!this.settings.isMouseOnMoveEnabled) {
-            window.addEventListener('keyup', (ev) => {
-                this.keyHit(ev)
-            })
-            this.settings.isMouseOnMoveEnabled = true
-        }
+        window.addEventListener('keyup', (ev) => {
+            this.keyHit(ev)
+        })
     }
 
     destroyKeyUpEventListener (): void {
         window.removeEventListener('keyup', this.keyHit)
-        this.settings.isMouseOnMoveEnabled = false
     }
 }
