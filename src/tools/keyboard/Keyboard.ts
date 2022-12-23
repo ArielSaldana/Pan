@@ -1,5 +1,7 @@
 import { EventEmitter } from '../../event-emitter/EventEmitter'
 import KeyboardSettings from './KeyboardSettings'
+import KeyboardUtils from './KeyboardUtils'
+import KeyInformation from './KeyInformation'
 
 export default class Keyboard extends EventEmitter {
     settings: KeyboardSettings = {
@@ -8,9 +10,13 @@ export default class Keyboard extends EventEmitter {
         allowSpecialCharacters: true
     }
 
+    keysmap: Map<string, KeyInformation>
+
     constructor (keyboardSettings: Object) {
         super()
         this.configureSettings(keyboardSettings)
+        const keyboardUtils = new KeyboardUtils()
+        this.keysmap = keyboardUtils.getKeysMap()
     }
 
     configureSettings(keyboardSettings): void {
@@ -68,7 +74,7 @@ export default class Keyboard extends EventEmitter {
 
     keyHit (eventInformation): void {
         this.emit(eventInformation.type, eventInformation.key, eventInformation)
-        this.emit('all', eventInformation.key, eventInformation)
+        this.emit('all', this.keysmap.get(eventInformation.key), eventInformation.type, eventInformation)
     }
 
     registerKeyDownEventListener (): void {
