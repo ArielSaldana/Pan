@@ -5,6 +5,7 @@ export abstract class EventEmitter {
     animationQueue = AnimationQueue.getInstance()
     abstract events: Map<string, Event>
     isEventKeyIsValid(eventKey: string): boolean {
+
         return this.events.has(eventKey)
     }
 
