@@ -6,6 +6,7 @@ export default class KeyboardUtils {
         Keys.Alt,
         Keys.CapsLock,
         Keys.Ctrl,
+        Keys.Control,
         Keys.Meta,
         Keys.NumLock,
         Keys.ScrollLock,
@@ -33,7 +34,8 @@ export default class KeyboardUtils {
         Keys.Backspace,
         Keys.Clear,
         Keys.Delete,
-        Keys.Insert
+        Keys.Insert,
+        Keys.Help
     ]
 
     uiKeys = [
@@ -166,6 +168,30 @@ export default class KeyboardUtils {
         Keys.SingleQuote
     ]
 
+    shiftKeys = [
+        Keys.Tilde,
+        Keys.ExclamationMark,
+        Keys.AtSign,
+        Keys.NumberSign,
+        Keys.DollarSign,
+        Keys.Percentage,
+        Keys.Caret,
+        Keys.Ampheran,
+        Keys.Asterisk,
+        Keys.UnderScore,
+        Keys.Plus,
+        Keys.Pipe,
+        Keys.OpenCurlyBracket,
+        Keys.CloseCurlyBracket,
+        Keys.Colon,
+        Keys.QuotationMark,
+        Keys.QuestionMark,
+        Keys.GreaterThanSign,
+        Keys.LessThanSign,
+        Keys.OpenBracketC,
+        Keys.CloseBracketC
+    ]
+
     getKeysMap(): Map<string, KeyInformation> {
         const keymap: Map<string, KeyInformation> = new Map(
             [
@@ -178,7 +204,8 @@ export default class KeyboardUtils {
                 ...this.uiKeys,
                 ...this.functionKeys,
                 ...this.numericKeyPad,
-                ...this.punctuationMarkKeys
+                ...this.punctuationMarkKeys,
+                ...this.shiftKeys
             ].map(item => {
                 const defaultKeyInformation: KeyInformation = {
                     isAlphabetic: false,
@@ -190,6 +217,7 @@ export default class KeyboardUtils {
                     isWhitespaceKey: false,
                     isModifierKey: false,
                     isPunctuationKey: false,
+                    isShiftKey: false,
                     value: item
                 }
 
@@ -225,6 +253,10 @@ export default class KeyboardUtils {
 
                 if (this.punctuationMarkKeys.includes(item)) {
                     defaultKeyInformation.isPunctuationKey = true
+                }
+
+                if (this.shiftKeys.includes(item)) {
+                    defaultKeyInformation.isShiftKey = true
                 }
 
                 return [item, defaultKeyInformation]

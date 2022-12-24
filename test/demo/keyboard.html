@@ -25,11 +25,14 @@
 <!-- Add your site or application content here -->
 <script src="../../dist/pan.js"></script>
 <script>
-    const keyboard = Pan.Keyboard.getInstance()
-
-    keyboard.on('all', (keyboardEvent, actionType) => {
-        console.log(actionType)
-        console.log(keyboardEvent)
+    const keyboard = Pan.Keyboard.getInstance({
+        allowNumbers: true,
+        allowSpecialCharacters: false
+    })
+    keyboard.on('all', (keyboardEvent, actionType, rawEvent) => {
+        if (actionType === 'keydown') {
+            console.log(keyboardEvent, rawEvent)
+        }
     })
 </script>
 </body>

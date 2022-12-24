@@ -8,5 +8,6 @@ export default interface KeyboardType {
     isWhitespaceKey: boolean
     isModifierKey: boolean
     isPunctuationKey: boolean
+    isShiftKey: boolean
     value: string
 }
