@@ -1,6 +1,12 @@
 import { EventEmitter } from '../../event-emitter/EventEmitter'
 import KeyboardSettings from './KeyboardSettings'
+import KeyboardUtils from './KeyboardUtils'
+import KeyInformation from './KeyInformation'
+import { Keys } from './Keys'
 
+export {
+    Keys
+}
 export default class Keyboard extends EventEmitter {
     settings: KeyboardSettings = {
         allowLetters: true,
@@ -8,17 +14,21 @@ export default class Keyboard extends EventEmitter {
         allowSpecialCharacters: true
     }
 
+    keysmap: Map<string, KeyInformation>
+
     constructor (keyboardSettings: Object) {
         super()
         this.configureSettings(keyboardSettings)
+        const keyboardUtils = new KeyboardUtils()
+        this.keysmap = keyboardUtils.getKeysMap()
     }
 
     configureSettings(keyboardSettings): void {
         if (keyboardSettings !== undefined) {
             this.settings = {
-                allowLetters: keyboardSettings.get('allowLetters') !== undefined ? keyboardSettings.get('allowLetters') : true,
-                allowNumbers: keyboardSettings.get('allowNumbers') !== undefined ? keyboardSettings.get('allowNumbers') : true,
-                allowSpecialCharacters: keyboardSettings.get('allowSpecialCharacters') !== undefined ? keyboardSettings.get('allowSpecialCharacters') : true
+                allowLetters: keyboardSettings.allowLetters !== undefined ? keyboardSettings.allowLetters : true,
+                allowNumbers: keyboardSettings.allowNumbers !== undefined ? keyboardSettings.allowNumbers : true,
+                allowSpecialCharacters: keyboardSettings.allowSpecialCharacters !== undefined ? keyboardSettings.allowSpecialCharacters : true
             }
         }
     }
@@ -67,27 +77,39 @@ export default class Keyboard extends EventEmitter {
     )
 
     keyHit (eventInformation): void {
-        this.emit(eventInformation.type, eventInformation.key, eventInformation)
-        this.emit('all', eventInformation.key, eventInformation)
+        let emit = true
+        const keyInformation = this.keysmap.get(eventInformation.key)
+
+        if (keyInformation !== undefined) {
+            emit = (keyInformation.isAlphabetic && this.settings.allowLetters) ||
+                    (keyInformation.isNumeric && this.settings.allowNumbers)
+            if (!emit && this.settings.allowSpecialCharacters) {
+                emit = !emit
+            }
+        }
+        if (emit) {
+            this.emit(eventInformation.type, eventInformation.key, eventInformation)
+            this.emit('all', this.keysmap.get(eventInformation.key), eventInformation.type, eventInformation)
+        }
     }
 
     registerKeyDownEventListener (): void {
-        window.addEventListener('keydown', (ev) => {
+        document.addEventListener('keydown', (ev) => {
             this.keyHit(ev)
         })
     }
 
     destroyKeyDownEventListener (): void {
-        window.removeEventListener('keydown', this.keyHit)
+        document.removeEventListener('keydown', this.keyHit)
     }
 
     registerKeyUpEventListener (): void {
-        window.addEventListener('keyup', (ev) => {
+        document.addEventListener('keyup', (ev) => {
             this.keyHit(ev)
         })
     }
 
     destroyKeyUpEventListener (): void {
-        window.removeEventListener('keyup', this.keyHit)
+        document.removeEventListener('keyup', this.keyHit)
     }
 }
