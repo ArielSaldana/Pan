@@ -16,5 +16,6 @@
         "indent": "off",
         "@typescript-eslint/indent": ["warn", 4],
         "@typescript-eslint/space-before-function-paren": 0
-    }
+    },
+    "ignorePatterns": ["**/*.d.ts", "/test/*"]
 }
