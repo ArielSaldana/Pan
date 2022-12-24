@@ -121,7 +121,7 @@ export enum Keys {
     BackSlash = '\\',
     CloseBracket = ']',
     SingleQuote = '\'',
-    PageUp = 'pageUp',
+    PageUp = 'PageUp',
     PageDown = 'PageDown',
     End = 'End',
     Home = 'Home',
