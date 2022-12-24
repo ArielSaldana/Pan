@@ -29,8 +29,8 @@
         allowNumbers: true,
         allowSpecialCharacters: false
     })
-    keyboard.on('all', (keyboardEvent, actionType, rawEvent) => {
-        if (actionType === 'keydown') {
+    keyboard.on('all', (keyboardEvent, rawEvent) => {
+        if (keyboardEvent.type === 'keydown') {
             console.log(keyboardEvent, rawEvent)
         }
     })
