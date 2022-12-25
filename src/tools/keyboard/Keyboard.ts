@@ -3,6 +3,7 @@ import KeyboardSettings from './KeyboardSettings'
 import KeyboardUtils from './KeyboardUtils'
 import KeyInformation from './KeyInformation'
 import { Keys } from './Keys'
+import KeyboardEmitObject from './KeyboardEmitObject'
 
 export {
     Keys
@@ -76,7 +77,7 @@ export default class Keyboard extends EventEmitter {
         })
     )
 
-    keyHit (eventInformation): void {
+    keyHit (eventInformation: KeyboardEvent): void {
         let emit = true
         const keyInformation = this.keysmap.get(eventInformation.key)
 
@@ -88,8 +89,17 @@ export default class Keyboard extends EventEmitter {
             }
         }
         if (emit) {
+            const keyEmitObject: KeyboardEmitObject = {
+                key: eventInformation.key,
+                code: eventInformation.code,
+                type: eventInformation.type,
+                altKeyDown: eventInformation.altKey,
+                ctrlKeyDown: eventInformation.ctrlKey,
+                shiftKeyDown: eventInformation.shiftKey,
+                keyInformation: keyInformation
+            }
             this.emit(eventInformation.type, eventInformation.key, eventInformation)
-            this.emit('all', this.keysmap.get(eventInformation.key), eventInformation.type, eventInformation)
+            this.emit('all', keyEmitObject, eventInformation)
         }
     }
 
