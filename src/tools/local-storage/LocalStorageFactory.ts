@@ -1,6 +1,6 @@
-import toSnakeCase from '../../ToSnakeCase'
+import toSnakeCase from '../../utils/ToSnakeCase'
+import capitalize from '../../utils/Capitalize'
 import LocalStorage from './LocalStorage'
-import capitalize from '../../Capitalize'
 
 export default function localStorageFactory(instanceName: string): any {
     return {

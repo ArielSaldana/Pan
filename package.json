@@ -8,8 +8,8 @@
     "webpackWatch": "webpack --watch",
     "lint": "eslint . --ext .ts",
     "lint-fix": "npm run lint -- --fix",
-    "generate-declarations": "tsc src/Pan.ts --declaration --emitDeclarationOnly --declarationDir dist ",
-    "generate-single-declarations": "tsc src/Pan.ts --declaration --emitDeclarationOnly --out dist/index.d.ts",
+    "generate-declarations": "tsc src/Pan.ts --declaration --showConfig --target es2020 --skipLibCheck --emitDeclarationOnly --declarationDir dist ",
+    "generate-single-declarations": "tsc src/Pan.ts --showConfig --target es2020 --skipLibCheck --declaration --emitDeclarationOnly --out dist/index.d.ts",
     "test": "jest",
     "test-debug": "jest --silent=false --verbose false",
     "build": "npm run webpackBuild && npm run generate-single-declarations"
