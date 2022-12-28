@@ -162,6 +162,12 @@ export default class Theme extends EventEmitter {
     destroyWindowChangeEventListener(): void {
         window.removeEventListener('change', this.windowChange)
     }
+
+    override afterListenerConfigured(eventKey: string, callback: Function): void {
+        if (eventKey === 'change' && this.settings.emitDefaultState === true) {
+            callback(this.state, undefined)
+        }
+    }
 }
 
 // add theme class to <html> tag, normal people usually use dark

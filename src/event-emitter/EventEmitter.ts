@@ -36,7 +36,7 @@ export abstract class EventEmitter {
             }
         }
         event.callbacks.push(eventCallback)
-        this.afterListenerConfigured(eventCallback)
+        this.afterListenerConfigured(eventKey, eventCallback)
     }
 
     off(eventKey): void {
@@ -65,5 +65,5 @@ export abstract class EventEmitter {
     }
 
     // lifecycle methods
-    afterListenerConfigured(callback: Function): void { }
+    afterListenerConfigured(eventKey: string, callback: Function): void { }
 }
