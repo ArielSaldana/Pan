@@ -16,8 +16,8 @@ export default class LocalStorage {
         window.localStorage.setItem(key, value)
     }
 
-    get(key: string): void {
-        window.localStorage.getItem(key)
+    get(key: string): any {
+        return window.localStorage.getItem(key)
     }
 
     remove(key: string): void {

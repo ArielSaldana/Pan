@@ -24,17 +24,15 @@
 <!-- Add your site or application content here -->
 <script src="../../dist/pan.js"></script>
 <script>
-    const theme = Pan.Theme.getInstance()
-
-    theme.on('change', (themeEvent, rawEvent) => {
-        console.log(rawEvent)
-        Pan.Theme.setDocumentTheme()
+    const theme = Pan.Theme.getInstance({
+        useLocalStorage: false,
+        useSystemSettings: true,
+        emitDefaultState: true,
+        defaultTheme: 'dark'
+    }).on('change', (themeEvent, rawEvent) => {
+        console.log(themeEvent)
     })
-//    keyboard.on('all', (keyboardEvent, rawEvent) => {
-//        if (keyboardEvent.type === 'keydown') {
-//            console.log(keyboardEvent, rawEvent)
-//        }
-//    })
+
 </script>
 </body>
 </html>
