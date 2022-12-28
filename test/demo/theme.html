@@ -17,22 +17,22 @@
     <meta name="theme-color" content="#fafafa">
 </head>
 <body>
-<style>
-    #rect { height: 80px; background: blue; }
-</style>
-<div id="rect"></div>
-<!-- Add your site or application content here -->
+    <button onClick="theme.toggleTheme()">Light Mode</button>
 <script src="../../dist/pan.js"></script>
 <script>
     const theme = Pan.Theme.getInstance({
-        useLocalStorage: false,
-        useSystemSettings: true,
+        useLocalStorage: true,
+        useSystemSettings: false,
         emitDefaultState: true,
         defaultTheme: 'dark'
-    }).on('change', (themeEvent, rawEvent) => {
-        console.log(themeEvent)
     })
 
+    theme.on('change', (themeEvent, rawEvent) => {
+        console.log(themeEvent)
+//        if (themeEvent.theme === 'dark') {
+//            theme.toggleTheme()
+//        }
+    })
 </script>
 </body>
 </html>

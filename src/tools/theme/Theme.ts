@@ -63,10 +63,6 @@ export default class Theme extends EventEmitter {
         if (!stateInitialized) {
             throw Error('Failed to initialize theme')
         }
-
-        if (this.settings.emitDefaultState === true) {
-            this.windowChange(undefined)
-        }
     }
 
     initSettings(themeSettings: ThemeSettings): void {
@@ -124,15 +120,38 @@ export default class Theme extends EventEmitter {
             throw Error('Not allowed to toggle with useSystemSettings')
         }
 
-        this.state.isDarkThemeEnabled = !this.state.isDarkThemeEnabled
-        this.state.isLightThemeEnabled = !this.state.isLightThemeEnabled
-
         if (this.state.isDarkThemeEnabled) {
-            document.documentElement.classList.remove(Theme.lightModeClassName)
-            document.documentElement.classList.add(Theme.darkModeClassname)
+            this.toggleLightTheme()
         } else {
-            document.documentElement.classList.remove(Theme.darkModeClassname)
+            this.toggleDarkTheme()
+        }
+    }
+
+    toggleDarkTheme(): void {
+        if (!this.state.isDarkThemeEnabled) {
+            document.documentElement.classList.add(Theme.darkModeClassname)
+            document.documentElement.classList.remove(Theme.lightModeClassName)
+            this.state.isDarkThemeEnabled = true
+            this.state.isLightThemeEnabled = false
+        }
+        this.saveUsingLocalStorage()
+        this.themeChange(undefined)
+    }
+
+    toggleLightTheme(): void {
+        if (!this.state.isLightThemeEnabled) {
             document.documentElement.classList.add(Theme.lightModeClassName)
+            document.documentElement.classList.remove(Theme.darkModeClassname)
+            this.state.isDarkThemeEnabled = false
+            this.state.isLightThemeEnabled = true
+        }
+        this.saveUsingLocalStorage()
+        this.themeChange(undefined)
+    }
+
+    saveUsingLocalStorage(): void {
+        if (this.settings.useLocalStorage === true) {
+            this.localStorage.add('state', this.state)
         }
     }
 
@@ -148,24 +167,32 @@ export default class Theme extends EventEmitter {
         }
     }
 
-    windowChange(windowChangeEvent): void {
-        this.emit('change', this.state, windowChangeEvent)
+    themeChange(windowChangeEvent): void {
+        const themeString = this.state.isDarkThemeEnabled ? 'dark' : 'light'
+        const emitState = {
+            theme: themeString
+        }
+        this.emit('change', emitState, windowChangeEvent)
     }
 
     registerWindowChangeEventListener(): void {
         window.window.matchMedia('(prefers-color-scheme: dark)')
             .addEventListener('change', (windowChangeEvent) => {
-                this.windowChange(windowChangeEvent)
+                this.themeChange(windowChangeEvent)
             })
     }
 
     destroyWindowChangeEventListener(): void {
-        window.removeEventListener('change', this.windowChange)
+        window.removeEventListener('change', this.themeChange)
     }
 
     override afterListenerConfigured(eventKey: string, callback: Function): void {
         if (eventKey === 'change' && this.settings.emitDefaultState === true) {
-            callback(this.state, undefined)
+            const themeString = this.state.isDarkThemeEnabled ? 'dark' : 'light'
+            const emitState = {
+                theme: themeString
+            }
+            callback(emitState, undefined)
         }
     }
 }
