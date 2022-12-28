@@ -4,6 +4,7 @@ import { EventEmitter } from './event-emitter/EventEmitter'
 import Viewport from './tools/viewport/Viewport'
 import Ticker from './tools/ticker/Ticker'
 import Theme from './tools/theme/Theme'
+import LocalStorage from './tools/local-storage/LocalStorage'
 
 export {
     EventEmitter,
@@ -11,5 +12,6 @@ export {
     Viewport,
     Ticker,
     Keyboard,
-    Theme
+    Theme,
+    LocalStorage
 }
