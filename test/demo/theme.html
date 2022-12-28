@@ -17,7 +17,7 @@
     <meta name="theme-color" content="#fafafa">
 </head>
 <body>
-    <button onClick="theme.toggleTheme()">Light Mode</button>
+<button onClick="theme.toggle()">Light Mode</button>
 <script src="../../dist/pan.js"></script>
 <script>
     const theme = Pan.Theme.getInstance({
@@ -29,9 +29,6 @@
 
     theme.on('change', (themeEvent, rawEvent) => {
         console.log(themeEvent)
-//        if (themeEvent.theme === 'dark') {
-//            theme.toggleTheme()
-//        }
     })
 </script>
 </body>
