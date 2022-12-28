@@ -60,7 +60,7 @@ export default class Viewport extends EventEmitter {
         this.state.isViewportResizeEnabled = false
     }
 
-    override afterListenerConfigured(callback: Function): void {
+    override afterListenerConfigured(keyEvent: string, callback: Function): void {
         if (this.settings.fireViewportInformationOnListen) {
             const location = {
                 width: window.innerWidth,
