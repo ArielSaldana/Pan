@@ -63,6 +63,23 @@ export default class Theme extends EventEmitter {
         if (!stateInitialized) {
             throw Error('Failed to initialize theme')
         }
+
+        this.updateDomBasedOnState()
+    }
+
+    updateDomBasedOnState(): void {
+        if (this.state.isDarkThemeEnabled === this.state.isLightThemeEnabled) {
+            throw Error('Something went wrong with updating the dom based on state, both values for dark and light theme are the same')
+        }
+        if (this.state.isDarkThemeEnabled) {
+            document.documentElement.classList.add(Theme.darkModeClassname)
+            document.documentElement.classList.remove(Theme.lightModeClassName)
+        } else if (this.state.isLightThemeEnabled) {
+            document.documentElement.classList.add(Theme.lightModeClassName)
+            document.documentElement.classList.remove(Theme.darkModeClassname)
+        } else {
+            throw Error('Something went wrong with updating the dom based on state')
+        }
     }
 
     initSettings(themeSettings: ThemeSettings): void {
@@ -115,7 +132,7 @@ export default class Theme extends EventEmitter {
         return true
     }
 
-    toggleTheme(): void {
+    toggle(): void {
         if (this.settings.useSystemSettings === true) {
             throw Error('Not allowed to toggle with useSystemSettings')
         }
@@ -129,22 +146,20 @@ export default class Theme extends EventEmitter {
 
     toggleDarkTheme(): void {
         if (!this.state.isDarkThemeEnabled) {
-            document.documentElement.classList.add(Theme.darkModeClassname)
-            document.documentElement.classList.remove(Theme.lightModeClassName)
             this.state.isDarkThemeEnabled = true
             this.state.isLightThemeEnabled = false
         }
+        this.updateDomBasedOnState()
         this.saveUsingLocalStorage()
         this.themeChange(undefined)
     }
 
     toggleLightTheme(): void {
         if (!this.state.isLightThemeEnabled) {
-            document.documentElement.classList.add(Theme.lightModeClassName)
-            document.documentElement.classList.remove(Theme.darkModeClassname)
             this.state.isDarkThemeEnabled = false
             this.state.isLightThemeEnabled = true
         }
+        this.updateDomBasedOnState()
         this.saveUsingLocalStorage()
         this.themeChange(undefined)
     }
@@ -152,18 +167,6 @@ export default class Theme extends EventEmitter {
     saveUsingLocalStorage(): void {
         if (this.settings.useLocalStorage === true) {
             this.localStorage.add('state', this.state)
-        }
-    }
-
-    static isDarkModeEnabled(): boolean {
-        return window.matchMedia('(prefers-color-scheme: dark)').matches
-    }
-
-    static setDocumentTheme(): void {
-        if (this.isDarkModeEnabled()) {
-            document.documentElement.classList.add(this.darkModeClassname)
-        } else {
-            document.documentElement.classList.add(this.lightModeClassName)
         }
     }
 
@@ -193,6 +196,18 @@ export default class Theme extends EventEmitter {
                 theme: themeString
             }
             callback(emitState, undefined)
+        }
+    }
+
+    static isDarkModeEnabled(): boolean {
+        return window.matchMedia('(prefers-color-scheme: dark)').matches
+    }
+
+    static setDocumentTheme(): void {
+        if (this.isDarkModeEnabled()) {
+            document.documentElement.classList.add(this.darkModeClassname)
+        } else {
+            document.documentElement.classList.add(this.lightModeClassName)
         }
     }
 }
