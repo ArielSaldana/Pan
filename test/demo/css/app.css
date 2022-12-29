@@ -71,7 +71,7 @@ p {
 .module-widget {
     display: inline-block;
     border-radius: 16px;
-    width: 30vw;
+    width: 44%;
 }
 
 .pan-dark-mode .module-widget {
