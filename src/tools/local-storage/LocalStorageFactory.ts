@@ -17,7 +17,11 @@ export default function localStorageFactory(instanceName: string): any {
 
         get: function(key: string): any {
             const fullyClassifiedName = toSnakeCase(instanceName + capitalize(key))
-            return JSON.parse(this.localStorageInstance.get(fullyClassifiedName))
+            const data = this.localStorageInstance.get(fullyClassifiedName)
+            if (data === undefined || data === null) {
+                return undefined
+            }
+            return JSON.parse(data)
         },
 
         remove: function(key: string) {
