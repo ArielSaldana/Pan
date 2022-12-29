@@ -1,0 +1,165 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <title>Pan Theme Demo</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta property="og:title" content="">
+    <meta property="og:type" content="">
+    <meta property="og:url" content="">
+    <meta property="og:image" content="">
+    <link rel="apple-touch-icon" href="icon.png">
+    <!-- Place favicon.ico in the root directory -->
+    <link rel="stylesheet" href="./css/normalize.css">
+    <link rel="stylesheet" href="./css/main.css">
+    <link rel="stylesheet" href="./css/app.css">
+    <link rel="stylesheet" href="./css/theme.css">
+    <meta name="theme-color" content="#fafafa">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Noto+Sans+TC:wght@500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="logo">Pan</div>
+            <div id="theme-toggle" onClick="theme.toggle()">
+            <div class="button-wrapper">
+                <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"><circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="2"/><path d="M12 4.5V3m0 18v-1.5M4.5 12H3m18 0h-1.5m-1-6.5l-1 1m-11 11l-1 1m12-1l1 1m-12-12l-1-1" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                <svg id="moon" xmlns="http://www.w3.org/2000/svg" fill="none" height="24" width="24"><path d="M20.22 12.683l.733.68zM11.317 3.78l.68.733zm-.217-.736l-.099-.995zm.954.148l.564.826zm8.754 8.754l-.826-.564zm-.826-.564c-.15.22-.315.427-.495.621l1.466 1.36a7.33 7.33 0 0 0 .681-.854zm-.495.621A5.283 5.283 0 0 1 15.6 13.7v2a7.28 7.28 0 0 0 5.353-2.337zM15.6 13.7a5.3 5.3 0 0 1-5.3-5.3h-2a7.3 7.3 0 0 0 7.3 7.3zm-5.3-5.3c0-1.536.652-2.918 1.697-3.887l-1.36-1.466A7.283 7.283 0 0 0 8.3 8.4zm1.697-3.887a5.36 5.36 0 0 1 .62-.495l-1.126-1.652a7.334 7.334 0 0 0-.854.68zm-.798-.473c.263-.027.53-.04.801-.04V2c-.337 0-.67.017-.999.05zM4 12a8.001 8.001 0 0 1 7.199-7.96L11 2.05c-5.053.5-9 4.763-9 9.95zm8 8a8 8 0 0 1-8-8H2c0 5.523 4.477 10 10 10zm8-8a8 8 0 0 1-8 8v2c5.523 0 10-4.477 10-10zm-7.382-7.982A1.106 1.106 0 0 0 12 2v2a.895.895 0 1 1-.51-1.634zm9.016 8.491A.894.894 0 0 1 20 12h2a1.106 1.106 0 1 0-2.018-.618z" fill="currentColor"/></svg>
+            </div>
+        </div>
+    </header>
+    <div class="body-wrapper">
+    <section>
+        <div>
+            <p>Bread</p>
+            <h1 style="font-size: 50px">🍞</h1>
+            <h2>Bread is an opensource tool that aims to speed up the development of web applications.</h2>
+
+            <ul>
+                <li>Theme</li>
+                <li>Viewport</li>
+                <li>Mouse</li>
+                <li>Keyboard</li>
+            </ul>
+        </div>
+    </section>
+
+    <section>
+    <h3>Modules</h3>
+        <div class="widget-wrapper">
+            <div class="module-widget">
+                <h3>Mouse</h3>
+                <div class="module-details">
+                    <div class="section">
+                        <p>Mouse X Position:</p>
+                        <p id="mouse-x">0</p>
+                    </div>
+                    <div class="section">
+                        <p>Mouse Y Position:</p>
+                        <p id="mouse-y">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="module-widget">
+                <h3>Viewport</h3>
+                <div class="module-details">
+                    <div class="section">
+                        <p>Viewport Width:</p>
+                        <p id="viewport-width">0</p>
+                    </div>
+                    <div class="section">
+                        <p>Viewport Height:</p>
+                        <p id="viewport-height">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="module-widget">
+                <h3>Keyboard</h3>
+                <div class="module-details">
+                    <div class="section">
+                        <p>Key Hit:</p>
+                        <p id="keyboard-key">0</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="module-widget">
+                <h3>Theme</h3>
+                <div class="module-details">
+                    <div class="section">
+                        <p id="theme"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    </div>
+<script src="../../dist/pan.js"></script>
+<script src="/pan.js"></script>
+<script>
+
+    // theme tool
+    const theme = Pan.Theme.getInstance({
+        useLocalStorage: true,
+        useSystemSettings: false,
+        emitDefaultState: true,
+        defaultTheme: 'dark'
+    })
+    const themeElem = document.getElementById('theme')
+    theme.on('change', (themeEvent, rawEvent) => {
+        themeElem.innerText = themeEvent.theme
+    })
+
+    // mouse tool
+
+    const mouse = new Pan.Mouse()
+    const mouseX = document.getElementById('mouse-x');
+    const mouseY = document.getElementById('mouse-y');
+
+    mouse.on('move', (ev) => {
+        mouse.animationQueue.addEvent("background-color", () => {
+            mouseX.innerText = (ev.x)
+            mouseY.innerText = (ev.y)
+        });
+    })
+
+    // keyboard tool
+    const keyboard = Pan.Keyboard.getInstance({
+        allowNumbers: true,
+        allowSpecialCharacters: false
+    })
+
+    const keyboardKey = document.getElementById('keyboard-key')
+
+    keyboard.on('all', (keyboardEvent, rawEvent) => {
+        if (keyboardEvent.type === 'keydown') {
+            keyboardKey.innerText = keyboardEvent.key
+        }
+    })
+
+    // viewport tool
+    const viewport = Pan.Viewport.getInstance({
+        fireViewportInformationOnListen: true
+    })
+
+    const viewportWidth = document.getElementById('viewport-width');
+    const viewportHeight = document.getElementById('viewport-height');
+
+    viewport.on("resize", (event) => {
+        viewportWidth.innerText = event.width + "px"
+        viewportHeight.innerText = event.height + "px"
+    })
+
+//    mouse.on('click', (ev) => {
+//        mouse.animationQueue.addEvent("background-color", () => {
+//            mouseInformationDiv.innerText = JSON.stringify(ev)
+//        });
+//    })
+</script>
+</body>
+</html>

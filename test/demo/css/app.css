@@ -67,3 +67,89 @@ p {
 .pan-dark-mode #third-square {
     background: #a0a0a0
 }
+
+.module-widget {
+    display: inline-block;
+    border-radius: 16px;
+    width: 30vw;
+}
+
+.pan-dark-mode .module-widget {
+    background: white;
+}
+
+.pan-light-mode .module-widget {
+    background: black;
+}
+
+
+.widget-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.widget-wrapper .module-widget {
+    margin: 20px;
+}
+
+.module-widget .module-details {
+    display: flex;
+}
+
+.module-widget .module-details {
+    margin: 30px;
+}
+
+.module-widget h3 {
+/*    text-align: center;*/
+    margin: 30px;
+    color: black;
+}
+
+.pan-dark-mode .module-widget h3 {
+    color: black;
+}
+
+.pan-light-mode .module-widget h3 {
+    color: white;
+}
+
+.module-widget p {
+    font-size: 16px;
+}
+
+.pan-dark-mode .module-widget p {
+    color: #5e5e5e;
+}
+
+.pan-dark-mode .module-widget p#mouse-x,
+.pan-dark-mode .module-widget p#mouse-y,
+.pan-dark-mode .module-widget p#keyboard-key,
+.pan-dark-mode .module-widget p#keyboard-details,
+.pan-dark-mode .module-widget p#viewport-width,
+.pan-dark-mode .module-widget p#viewport-height,
+.pan-dark-mode .module-widget p#theme {
+    font-weight: bold;
+    font-size: 20px;
+    color: black;
+}
+.pan-light-mode .module-details .section p {
+    color: #525252;
+}
+
+.pan-light-mode .module-widget p#mouse-x,
+.pan-light-mode .module-widget p#mouse-y,
+.pan-light-mode .module-widget p#keyboard-key,
+.pan-light-mode .module-widget p#keyboard-details,
+.pan-light-mode .module-widget p#viewport-width,
+.pan-light-mode .module-widget p#viewport-height,
+.pan-light-mode .module-widget p#theme {
+    font-weight: bold;
+    font-size: 20px;
+    color: white;
+}
+
+#keyboard-key {
+    font-size: 60px !important;
+}
+
