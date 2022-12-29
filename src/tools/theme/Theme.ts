@@ -36,9 +36,6 @@ export default class Theme extends EventEmitter {
         return Theme.instance
     }
 
-    static lightModeClassName = 'pan-system-light-mode'
-    static darkModeClassname = 'pan-system-dark-mode'
-
     private constructor (themeSettings: ThemeSettings) {
         super()
         this.initSettings(themeSettings)
@@ -198,6 +195,9 @@ export default class Theme extends EventEmitter {
             callback(emitState, undefined)
         }
     }
+
+    static lightModeClassName = 'pan-light-mode'
+    static darkModeClassname = 'pan-dark-mode'
 
     static isDarkModeEnabled(): boolean {
         return window.matchMedia('(prefers-color-scheme: dark)').matches

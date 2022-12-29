@@ -12,7 +12,8 @@
     "generate-single-declarations": "tsc src/Pan.ts --showConfig --target es2020 --skipLibCheck --declaration --emitDeclarationOnly --out dist/index.d.ts",
     "test": "jest",
     "test-debug": "jest --silent=false --verbose false",
-    "build": "npm run webpackBuild && npm run generate-single-declarations"
+    "build": "npm run webpackBuild && npm run generate-single-declarations",
+    "build-site": "npm run build && cp -R test/demo/* dist/"
   },
   "keywords": [],
   "author": "Ariel Saldana",
