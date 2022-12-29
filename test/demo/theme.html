@@ -47,10 +47,17 @@
 <script src="/pan.js"></script>
 <script>
     const theme = Pan.Theme.getInstance({
-        useLocalStorage: false,
-        useSystemSettings: true,
+        useLocalStorage: true,
+        useSystemSettings: false,
         emitDefaultState: true,
+        defaultTheme: 'dark'
     })
+
+//    const theme = Pan.Theme.getInstance({
+//        useLocalStorage: false,
+//        useSystemSettings: true,
+//        emitDefaultState: true,
+//    })
 
     theme.on('change', (themeEvent, rawEvent) => {
         console.log(themeEvent)
