@@ -1,5 +1,6 @@
 import { EventEmitter } from '../../event-emitter/EventEmitter'
 import addEvent from '../../decorators/AddEvents'
+import ScrollEmitObject from './ScrollEmitObject'
 
 export default class Scroll extends EventEmitter {
     private constructor () {
@@ -17,7 +18,7 @@ export default class Scroll extends EventEmitter {
     override events = new Map()
 
     @addEvent('scroll', Scroll.getInstance())
-    viewportScroll(ev): string {
+    viewportScroll(ev): ScrollEmitObject {
         return {
             scrollX: window.scrollX,
             scrollY: window.scrollY
