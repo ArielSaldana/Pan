@@ -157,9 +157,9 @@
 
     const scroll = Pan.Scroll.getInstance();
     scroll.on('scroll', (scrollEvent) => {
-        if (scrollEvent.scrollY > 1) {
+        if (scrollEvent.scrollDirection === 'down') {
             header.classList.add('hide')
-        } else {
+        } else if (scrollEvent.scrollDirection === 'up') {
             header.classList.remove('hide')
         }
     })
