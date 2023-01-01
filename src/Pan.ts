@@ -5,6 +5,7 @@ import Viewport from './tools/viewport/Viewport'
 import Ticker from './tools/ticker/Ticker'
 import Theme from './tools/theme/Theme'
 import LocalStorage from './tools/local-storage/LocalStorage'
+import Scroll from './tools/scroll/Scroll'
 
 export {
     EventEmitter,
@@ -13,5 +14,6 @@ export {
     Ticker,
     Keyboard,
     Theme,
-    LocalStorage
+    LocalStorage,
+    Scroll
 }

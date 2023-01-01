@@ -22,7 +22,7 @@
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Noto+Sans+TC:wght@500&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
+    <header id="top-bar">
         <div class="logo">Pan</div>
             <div id="theme-toggle" onClick="theme.toggle()">
             <div class="button-wrapper">
@@ -34,9 +34,8 @@
     <div class="body-wrapper">
     <section>
         <div>
-            <p>Bread</p>
             <h1 style="font-size: 50px">🍞</h1>
-            <h2>Bread is an opensource tool that aims to speed up the development of web applications.</h2>
+            <h2>Pan is an opensource tool that aims to speed up the development of web applications.</h2>
 
             <ul>
                 <li>Theme</li>
@@ -154,12 +153,16 @@
         viewportWidth.innerText = event.width + "px"
         viewportHeight.innerText = event.height + "px"
     })
+    const header = document.getElementById("top-bar");
 
-//    mouse.on('click', (ev) => {
-//        mouse.animationQueue.addEvent("background-color", () => {
-//            mouseInformationDiv.innerText = JSON.stringify(ev)
-//        });
-//    })
+    const scroll = Pan.Scroll.getInstance();
+    scroll.on('scroll', (scrollEvent) => {
+        if (scrollEvent.scrollY > 1) {
+            header.classList.add('hide')
+        } else {
+            header.classList.remove('hide')
+        }
+    })
 </script>
 </body>
 </html>

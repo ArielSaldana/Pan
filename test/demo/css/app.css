@@ -153,3 +153,10 @@ p {
     font-size: 60px !important;
 }
 
+header#top-bar {
+    transition: all .2s ease-out;
+}
+
+header#top-bar.hide {
+    transform: translateY(-50px);
+}
