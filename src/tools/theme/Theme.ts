@@ -45,15 +45,15 @@ export default class Theme extends EventEmitter {
     initialize(): void {
         let stateInitialized = false
 
-        if (this.settings.defaultTheme !== undefined) {
-            stateInitialized = this.initStateFromUserSettingsDefault()
-        }
-
         if (this.settings.useLocalStorage === true || !stateInitialized) {
             stateInitialized = this.initStateFromLocalStorage()
         }
 
-        if (this.settings.useSystemSettings === true || !stateInitialized) {
+        if (this.settings.defaultTheme !== undefined && !stateInitialized) {
+            stateInitialized = this.initStateFromUserSettingsDefault()
+        }
+
+        if (this.settings.useSystemSettings === true && !stateInitialized) {
             stateInitialized = this.initStateFromSystemSettings()
         }
 
@@ -66,6 +66,8 @@ export default class Theme extends EventEmitter {
 
     updateDomBasedOnState(): void {
         if (this.state.isDarkThemeEnabled === this.state.isLightThemeEnabled) {
+            console.warn('State: ', this.state)
+            console.warn('Settings: ', this.settings)
             throw Error('Something went wrong with updating the dom based on state, both values for dark and light theme are the same')
         }
         if (this.state.isDarkThemeEnabled) {
