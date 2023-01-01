@@ -7,6 +7,11 @@ html .body-wrapper {
     margin: 0 auto;
     max-width: 960px;
 }
+
+body {
+    background: inherit;
+}
+
 header {
     position: relative;
     border-bottom: 1px solid #ffffff0f;
@@ -154,7 +159,12 @@ p {
 }
 
 header#top-bar {
-    transition: all .2s ease-out;
+    transition: transform .2s ease-out;
+    background-color: inherit;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
 }
 
 header#top-bar.hide {
