@@ -13,7 +13,7 @@
     "test": "jest",
     "test-debug": "jest --silent=false --verbose false",
     "build": "npm run webpackBuild && npm run generate-single-declarations",
-    "build-site": "npm run build && cp -R test/demo/* dist/",
+    "build-site": "npm run build",
     "webpackServe": "webpack serve"
   },
   "keywords": [],
