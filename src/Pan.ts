@@ -7,6 +7,8 @@ import Theme from './tools/theme/Theme'
 import LocalStorage from './tools/local-storage/LocalStorage'
 import Scroll from './tools/scroll/Scroll'
 
+require('../test/demo/index.html')
+
 export {
     EventEmitter,
     Mouse,
