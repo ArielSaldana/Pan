@@ -3,19 +3,19 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Pan Theme Demo</title>
-    <meta name="description" content="">
+    <title>Pan | Demo</title>
+    <meta name="description" content="Pan | Demo">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta property="og:title" content="">
-    <meta property="og:type" content="">
-    <meta property="og:url" content="">
-    <meta property="og:image" content="">
-    <link rel="apple-touch-icon" href="icon.png">
+    <meta property="og:title" content="Pan | Demo">
+<!--    <meta property="og:type" content="">-->
+<!--    <meta property="og:url" content="">-->
+<!--    <meta property="og:image" content="">-->
+<!--    <link rel="apple-touch-icon" href="icon.png">-->
     <!-- Place favicon.ico in the root directory -->
     <link rel="stylesheet" href="./css/normalize.css">
-    <link rel="stylesheet" href="./css/main.css">
-    <link rel="stylesheet" href="./css/app.css">
-    <link rel="stylesheet" href="./css/theme.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/app.css">
+    <link rel="stylesheet" href="css/theme.css">
     <meta name="theme-color" content="#fafafa">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -98,71 +98,8 @@
         </div>
     </section>
     </div>
-<script src="../../dist/pan.js"></script>
-<script src="/pan.js"></script>
-<script>
-
-    // theme tool
-    const theme = Pan.Theme.getInstance({
-        useLocalStorage: true,
-        useSystemSettings: false,
-        emitDefaultState: true,
-        defaultTheme: 'dark'
-    })
-    const themeElem = document.getElementById('theme')
-    theme.on('change', (themeEvent, rawEvent) => {
-        themeElem.innerText = themeEvent.theme
-    })
-
-    // mouse tool
-
-    const mouse = new Pan.Mouse()
-    const mouseX = document.getElementById('mouse-x');
-    const mouseY = document.getElementById('mouse-y');
-
-    mouse.on('move', (ev) => {
-        mouse.animationQueue.addEvent("background-color", () => {
-            mouseX.innerText = (ev.x)
-            mouseY.innerText = (ev.y)
-        });
-    })
-
-    // keyboard tool
-    const keyboard = Pan.Keyboard.getInstance({
-        allowNumbers: true,
-        allowSpecialCharacters: false
-    })
-
-    const keyboardKey = document.getElementById('keyboard-key')
-
-    keyboard.on('all', (keyboardEvent, rawEvent) => {
-        if (keyboardEvent.type === 'keydown') {
-            keyboardKey.innerText = keyboardEvent.key
-        }
-    })
-
-    // viewport tool
-    const viewport = Pan.Viewport.getInstance({
-        fireViewportInformationOnListen: true
-    })
-
-    const viewportWidth = document.getElementById('viewport-width');
-    const viewportHeight = document.getElementById('viewport-height');
-
-    viewport.on("resize", (event) => {
-        viewportWidth.innerText = event.width + "px"
-        viewportHeight.innerText = event.height + "px"
-    })
-    const header = document.getElementById("top-bar");
-
-    const scroll = Pan.Scroll.getInstance();
-    scroll.on('scroll', (scrollEvent) => {
-        if (scrollEvent.scrollDirection === 'down') {
-            header.classList.add('hide')
-        } else if (scrollEvent.scrollDirection === 'up') {
-            header.classList.remove('hide')
-        }
-    })
-</script>
+<!--<script src="../../dist/pan.js"></script>-->
+<!--<script src="/dist/pan.js"></script>-->
+<script src="./js/app.js"></script>
 </body>
 </html>
