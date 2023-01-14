@@ -1,6 +1,5 @@
 import { EventEmitter } from '../../event-emitter/EventEmitter'
 import { TickerState } from './TickerState'
-import TickerEventList from './TickerEventList'
 
 export default class Ticker extends EventEmitter {
     static instance: Ticker
@@ -22,14 +21,13 @@ export default class Ticker extends EventEmitter {
         return Ticker.instance
     }
 
-    tickerEventList: TickerEventList = new TickerEventList()
-
     override events = new Map(
         Object.entries({
             tick: {
                 initFunction: () => {
                     this.state.startTime = Date.now()
                     this.state.hasTickerStarted = true
+//                    this.tick.bind(this)
                     requestAnimationFrame(this.tick.bind(this))
                 },
                 destroyFunction: undefined,
@@ -39,19 +37,21 @@ export default class Ticker extends EventEmitter {
     )
 
     tick(currentTime): void {
-        const delta = currentTime - this.state.previousTickTimeStamp
-        this.state.previousTickTimeStamp = currentTime
-
-        if (delta < 100) {
-            this.state.ticks += delta
+        if (currentTime !== undefined) {
+            const delta = currentTime - this.state.previousTickTimeStamp
             this.state.previousTickTimeStamp = currentTime
-            this.emit('tick', {
-                delta,
-                tick: this.getTick(),
-                tickRounded: Math.round(this.getTick())
-            })
-        } else {
-            console.log('frame skipped')
+
+            if (delta < 100) {
+                this.state.ticks += delta
+                this.state.previousTickTimeStamp = currentTime
+                this.emit('tick', {
+                    delta,
+                    tick: this.getTick(),
+                    tickRounded: Math.round(this.getTick())
+                })
+            } else {
+                console.log('frame skipped')
+            }
         }
         requestAnimationFrame(this.tick.bind(this))
     }
@@ -62,30 +62,4 @@ export default class Ticker extends EventEmitter {
     getTick(): number {
         return this.state.ticks
     }
-
-    /*
-     * Takes in an argument in Seconds that defines how far in the future from now should the callback be called
-     */
-//    afterSeconds(elapsedTimeInSeconds: number, callback): void {
-//        const executeBy = Date.now() + (elapsedTimeInSeconds * 1000)
-//        this.at(executeBy, callback)
-//    }
-//
-//    /*
-//     * Takes in an argument in Milliseconds that defines how far in the future from now should the callback be called
-//     */
-//    after(elapsedTimeInMS: number, callback): void {
-//        const executeBy = Date.now() + elapsedTimeInMS
-//        this.at(executeBy, callback)
-//    }
-//
-//    /*
-//     * Gives a specific time to add to the TimeEventList, Denoted by UNIX EPOCH
-//     */
-//    at(executeBy: Number, callback): void {
-//        this.tickerEventList.addNode({
-//            executeBy,
-//            callback
-//        })
-//    }
 }
