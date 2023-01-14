@@ -3,4 +3,5 @@ export interface TickerState {
     startTime?: number
     ticks: number
     previousTickTimeStamp: number
+    tickProgress: number
 }

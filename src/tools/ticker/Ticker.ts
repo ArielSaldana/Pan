@@ -50,12 +50,6 @@ export default class Ticker extends EventEmitter {
                 tick: this.getTick(),
                 tickRounded: Math.round(this.getTick())
             })
-//            const it = this.tickerEventList.getAllReadyToExecute()
-//            let result = it.next()
-//            while (result.done !== true) {
-//                result.value.callback()
-//                result = it.next()
-//            }
         } else {
             console.log('frame skipped')
         }

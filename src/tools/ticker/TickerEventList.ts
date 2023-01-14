@@ -1,8 +1,23 @@
 import TickerNode from './TickerNode'
+import Ticker from './Ticker'
 
 export default class TickerEventList {
+    ticker: Ticker = Ticker.getInstance()
     root: TickerNode | undefined = undefined
     length = 0
+
+    constructor() {
+        this.ticker.on('tick', this.handleTick)
+    }
+
+    handleTick(): void {
+        const it = this.getAllReadyToExecute()
+        let result = it.next()
+        while (result.done !== true) {
+            result.value.callback()
+            result = it.next()
+        }
+    }
 
     addNode(node: TickerNode): void {
         if (this.root === undefined) {
