@@ -5,20 +5,6 @@ export default class TickerEventList {
     ticker: Ticker = Ticker.getInstance()
     root: TickerNode | undefined = undefined
     length = 0
-
-    constructor() {
-        this.ticker.on('tick', this.handleTick)
-    }
-
-    handleTick(): void {
-        const it = this.getAllReadyToExecute()
-        let result = it.next()
-        while (result.done !== true) {
-            result.value.callback()
-            result = it.next()
-        }
-    }
-
     addNode(node: TickerNode): void {
         if (this.root === undefined) {
             this.root = node
@@ -62,5 +48,31 @@ export default class TickerEventList {
 
     clean(): void {
         this.root = undefined
+    }
+
+    /*
+     * Takes in an argument in Seconds that defines how far in the future from now should the callback be called
+     */
+    afterSeconds(elapsedTimeInSeconds: number, callback): void {
+        const executeBy = Date.now() + (elapsedTimeInSeconds * 1000)
+        this.at(executeBy, callback)
+    }
+
+    /*
+         * Takes in an argument in Milliseconds that defines how far in the future from now should the callback be called
+         */
+    after(elapsedTimeInMS: number, callback): void {
+        const executeBy = Date.now() + elapsedTimeInMS
+        this.at(executeBy, callback)
+    }
+
+    /*
+         * Gives a specific time to add to the TimeEventList, Denoted by UNIX EPOCH
+         */
+    at(executeBy: Number, callback): void {
+        this.addNode({
+            executeBy,
+            callback
+        })
     }
 }
