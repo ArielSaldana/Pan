@@ -22,6 +22,7 @@
     <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&family=Noto+Sans+TC:wght@500&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div data-pan-scroll>
     <header id="top-bar">
         <div class="logo">Pan</div>
             <div id="theme-toggle" onClick="theme.toggle()">
@@ -31,12 +32,11 @@
             </div>
         </div>
     </header>
-    <div class="body-wrapper">
+    <div class="body-wrapper" data-pan-scroll>
     <section>
         <div>
             <h1 style="font-size: 50px">🍞</h1>
             <h2>Pan is an opensource tool that aims to speed up the development of web applications.</h2>
-
             <ul>
                 <li>Theme</li>
                 <li>Viewport</li>
@@ -97,9 +97,18 @@
             </div>
         </div>
     </section>
+    <section>
+        <h2>Animation</h2>
+        <div>
+            <button onClick="animationButtonToggle()">Click me</button>
+            <div class="animation-box-wrapper">
+                <div id="animation-box-1"></div>
+                <div id="animation-box-2"></div>
+            </div>
+        </div>
+    </section>
     </div>
-<!--<script src="../../dist/pan.js"></script>-->
-<!--<script src="/dist/pan.js"></script>-->
-<script src="./js/app.js"></script>
+    </div>
+    <script src="./js/app.js"></script>
 </body>
 </html>
