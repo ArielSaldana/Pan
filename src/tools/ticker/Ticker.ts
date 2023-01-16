@@ -7,7 +7,8 @@ export default class Ticker extends EventEmitter {
         hasTickerStarted: false,
         ticks: 0,
         previousTickTimeStamp: 0,
-        tickProgress: Date.now()
+        tickProgress: Date.now(),
+        paused: false
     }
 
     private constructor () {
@@ -27,7 +28,6 @@ export default class Ticker extends EventEmitter {
                 initFunction: () => {
                     this.state.startTime = Date.now()
                     this.state.hasTickerStarted = true
-//                    this.tick.bind(this)
                     requestAnimationFrame(this.tick.bind(this))
                 },
                 destroyFunction: undefined,
@@ -37,21 +37,19 @@ export default class Ticker extends EventEmitter {
     )
 
     tick(currentTime): void {
-        if (currentTime !== undefined) {
-            const delta = currentTime - this.state.previousTickTimeStamp
-            this.state.previousTickTimeStamp = currentTime
+        const delta = currentTime - this.state.previousTickTimeStamp
+        this.state.previousTickTimeStamp = currentTime
 
-            if (delta < 100) {
-                this.state.ticks += delta
-                this.state.previousTickTimeStamp = currentTime
-                this.emit('tick', {
-                    delta,
-                    tick: this.getTick(),
-                    tickRounded: Math.round(this.getTick())
-                })
-            } else {
-                console.log('frame skipped')
-            }
+        if (delta < 100) {
+            this.state.ticks += delta
+            this.state.previousTickTimeStamp = currentTime
+            this.emit('tick', {
+                delta,
+                tick: this.getTick(),
+                tickRounded: Math.round(this.getTick())
+            })
+        } else {
+            console.log('frame skipped')
         }
         requestAnimationFrame(this.tick.bind(this))
     }

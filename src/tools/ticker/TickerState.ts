@@ -4,4 +4,5 @@ export interface TickerState {
     ticks: number
     previousTickTimeStamp: number
     tickProgress: number
+    paused: boolean
 }
