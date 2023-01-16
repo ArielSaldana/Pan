@@ -1,8 +1,8 @@
 /* Define the easing function
-t: The current time of the animation. This value is typically expressed in milliseconds.
-b: The starting value of the animation. This is the value that the animation will start at.
-c: The change in value of the animation. This is the difference between the starting value and the target value.
-d: The duration of the animation. This is the total length of time that the animation will take to complete.
+currentTime: The current time of the animation. This value is typically expressed in milliseconds.
+start: The starting value of the animation. This is the value that the animation will start at.
+change: The change in value of the animation. This is the difference between the starting value and the target value.
+duration: The duration of the animation. This is the total length of time that the animation will take to complete.
 */
 export default function easeInOutQuad(
     time: number,
