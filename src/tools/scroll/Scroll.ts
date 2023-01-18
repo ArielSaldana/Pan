@@ -36,10 +36,6 @@ export default class Scroll extends EventEmitter {
         } else {
             direction = ScrollDirection.left
         }
-
-        this.state.lastXPosition = scrollX
-        this.state.lastYPosition = scrollY
-
         return direction
     }
 
@@ -54,10 +50,6 @@ export default class Scroll extends EventEmitter {
         } else {
             direction = ScrollDirection.left
         }
-
-        this.state.lastXPosition += wheelEvent.deltaX
-        this.state.lastYPosition += wheelEvent.deltaY
-
         return direction
     }
 
@@ -71,6 +63,8 @@ export default class Scroll extends EventEmitter {
 
     @addEvent('scroll', Scroll.getInstance())
     viewportScroll(ev): ScrollEmitObject {
+        this.state.lastXPosition = scrollX
+        this.state.lastYPosition = scrollY
         return {
             scrollX: window.scrollX,
             scrollY: window.scrollY,
@@ -79,13 +73,17 @@ export default class Scroll extends EventEmitter {
     }
 
     @addEvent('wheel', Scroll.getInstance())
-    wheelScroll(ev: WheelEvent): any {
+    wheelScroll(wheelEvent: WheelEvent): any {
+        this.state.lastXPosition += wheelEvent.deltaX
+        this.state.lastYPosition += wheelEvent.deltaY
         return {
-            rawEvent: ev,
-            scrollSource: this.getWheelEventHardwareSource(ev),
-            scrollDirection: this.getWheelScrollDirection(ev),
+            rawEvent: wheelEvent,
+            scrollSource: this.getWheelEventHardwareSource(wheelEvent),
+            scrollDirection: this.getWheelScrollDirection(wheelEvent),
             scrollX: this.state.lastXPosition,
-            scrollY: this.state.lastYPosition
+            scrollY: this.state.lastYPosition,
+            deltaX: wheelEvent.deltaX,
+            deltaY: wheelEvent.deltaY
         }
     }
 }
