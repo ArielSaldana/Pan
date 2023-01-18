@@ -55,7 +55,7 @@ export default class Mouse extends EventEmitter {
 
     registerMouseMoveEventListener(): void {
         if (!this.settings.isMouseOnMoveEnabled) {
-            document.addEventListener('mousemove', (ev) => {
+            window.addEventListener('mousemove', (ev) => {
                 this.mouseMove(ev)
             })
             this.settings.isMouseOnMoveEnabled = true
@@ -63,7 +63,7 @@ export default class Mouse extends EventEmitter {
     }
 
     destroyMouseMoveEventListener(): void {
-        document.removeEventListener('mousemove', this.mouseMove)
+        window.removeEventListener('mousemove', this.mouseMove)
         this.settings.isMouseOnMoveEnabled = false
     }
 
