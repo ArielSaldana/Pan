@@ -30,9 +30,10 @@ export default class Mouse extends EventEmitter {
     )
 
     mouseMove(eventInformation): void {
+        console.log(eventInformation)
         const location = {
-            x: eventInformation.offsetX,
-            y: eventInformation.offsetY
+            x: eventInformation.clientX,
+            y: eventInformation.clientY
         }
         this.emit('move', location)
     }
@@ -55,7 +56,7 @@ export default class Mouse extends EventEmitter {
 
     registerMouseMoveEventListener(): void {
         if (!this.settings.isMouseOnMoveEnabled) {
-            window.addEventListener('mousemove', (ev) => {
+            document.addEventListener('mousemove', (ev) => {
                 this.mouseMove(ev)
             })
             this.settings.isMouseOnMoveEnabled = true
@@ -63,7 +64,7 @@ export default class Mouse extends EventEmitter {
     }
 
     destroyMouseMoveEventListener(): void {
-        window.removeEventListener('mousemove', this.mouseMove)
+        document.removeEventListener('mousemove', this.mouseMove)
         this.settings.isMouseOnMoveEnabled = false
     }
 
