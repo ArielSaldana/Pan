@@ -1,6 +1,6 @@
 {
   "name": "@unreal/pan",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "main": "dist/pan.js",
   "types": "dist/Pan.d.ts",
   "scripts": {
@@ -9,7 +9,7 @@
     "lint": "eslint . --ext .ts",
     "lint-fix": "npm run lint -- --fix",
     "generate-declarations": "tsc src/Pan.ts --declaration --showConfig --target es2020 --skipLibCheck --emitDeclarationOnly --declarationDir dist ",
-    "generate-single-declarations": "tsc src/Pan.ts --showConfig --target es2020 --skipLibCheck --declaration --emitDeclarationOnly --out dist/index.d.ts",
+    "generate-single-declarations": "npx -p typescript tsc src/Pan.ts --declaration --allowJs --emitDeclarationOnly --out dist/index.d.ts --target es2020 --experimentalDecorators --skipLibCheck",
     "test": "jest",
     "test-debug": "jest --silent=false --verbose false",
     "build": "npm run webpackBuild && npm run generate-single-declarations",
