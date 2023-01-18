@@ -31,8 +31,8 @@ export default class Mouse extends EventEmitter {
 
     mouseMove(eventInformation): void {
         const location = {
-            x: eventInformation.offsetX,
-            y: eventInformation.offsetY
+            x: eventInformation.clientX,
+            y: eventInformation.clientY
         }
         this.emit('move', location)
     }
