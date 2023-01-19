@@ -10,6 +10,10 @@ import CustomScroll from './tools/scroll/CustomScroll'
 
 require('../test/demo/index.html')
 
+const viewport = Viewport.getInstance
+const mouse = Mouse.getInstance
+const ticker = Ticker.getInstance
+
 export {
     EventEmitter,
     Mouse,
@@ -19,5 +23,8 @@ export {
     Theme,
     LocalStorage,
     Scroll,
-    CustomScroll
+    CustomScroll,
+    viewport,
+    mouse,
+    ticker
 }
