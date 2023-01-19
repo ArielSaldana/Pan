@@ -16,7 +16,7 @@
         "generate-single-declarations": "npx -p typescript tsc src/Pan.ts --declaration --emitDeclarationOnly --out dist/index.d.ts --target es2020 --experimentalDecorators --skipLibCheck",
         "test": "jest",
         "test-debug": "jest --silent=false --verbose false",
-        "build": "npm run webpackBuild && npm run generate-single-declarations",
+        "build": "npm run vite && npm run webpackBuild",
         "build-site": "npm run build",
         "webpackServe": "webpack serve",
         "vite": "vite build && tsc --emitDeclarationOnly"
