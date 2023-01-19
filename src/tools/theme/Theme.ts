@@ -219,4 +219,6 @@ export default class Theme extends EventEmitter {
 }
 
 // add theme class to <html> tag, normal people usually use dark
-Theme.setDocumentTheme()
+if (window !== undefined) {
+    Theme.setDocumentTheme()
+}
