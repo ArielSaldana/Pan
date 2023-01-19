@@ -29,8 +29,10 @@ export default class CustomScroll {
     }
 
     initScrollEventsListener(): void {
-        this.scroll.on('wheel', (wheelEvent) => {
-            this.scrollElem.style.transform = `matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, ${wheelEvent.scrollY * -1}, 0, 1)`
-        })
+        if (this.scroll !== undefined) {
+            this.scroll.on('wheel', (wheelEvent) => {
+                this.scrollElem.style.transform = `matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, ${wheelEvent.scrollY * -1}, 0, 1)`
+            })
+        }
     }
 }

@@ -21,11 +21,13 @@ export default class Viewport extends EventEmitter {
     }
 
     public static instance: Viewport
-    public static getInstance(options?: ViewportSettings): Viewport {
-        if (Viewport.instance === undefined) {
-            Viewport.instance = new Viewport(options)
+    public static getInstance(options?: ViewportSettings): Viewport | undefined {
+        if (typeof window !== 'undefined') {
+            if (Viewport.instance === undefined) {
+                Viewport.instance = new Viewport(options)
+            }
+            return Viewport.instance
         }
-        return Viewport.instance
     }
 
     override events = new Map(

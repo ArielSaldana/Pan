@@ -2,7 +2,7 @@ import TickerNode from './TickerNode'
 import Ticker from './Ticker'
 
 export default class TickerEventList {
-    ticker: Ticker = Ticker.getInstance()
+    ticker = Ticker.getInstance()
     root: TickerNode | undefined = undefined
     length = 0
     addNode(node: TickerNode): void {

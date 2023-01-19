@@ -7,11 +7,13 @@ export default class Mouse extends EventEmitter {
     }
 
     public static instance: Mouse
-    public static getInstance(): Mouse {
-        if (Mouse.instance === undefined) {
-            Mouse.instance = new Mouse()
+    public static getInstance(): Mouse | undefined {
+        if (typeof window !== 'undefined') {
+            if (Mouse.instance === undefined) {
+                Mouse.instance = new Mouse()
+            }
+            return Mouse.instance
         }
-        return Mouse.instance
     }
 
     override events = new Map(

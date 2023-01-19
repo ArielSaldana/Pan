@@ -8,8 +8,6 @@ import LocalStorage from './tools/local-storage/LocalStorage'
 import Scroll from './tools/scroll/Scroll'
 import CustomScroll from './tools/scroll/CustomScroll'
 
-require('../test/demo/index.html')
-
 const viewport = Viewport.getInstance
 const mouse = Mouse.getInstance
 const ticker = Ticker.getInstance

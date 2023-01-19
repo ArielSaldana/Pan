@@ -1,18 +1,19 @@
 {
   "compilerOptions": {
-    "module": "es2015",
+      "module": "ESNext",
+      "useDefineForClassFields": true,
     "esModuleInterop": true,
-    "target": "es2020",
+      "target": "ESNext",
     "moduleResolution": "node",
     "sourceMap": true,
     "outDir": "dist",
     "strictNullChecks": true,
     "declaration": true,
-    "experimentalDecorators": true,
+      "declarationMap": true,
+      "experimentalDecorators": true,
+      "lib": ["DOM", "DOM.Iterable", "ESNext"],
   },
-  "lib": [
-    "es2020"
-  ],
+  "lib": ["DOM", "DOM.Iterable", "ESNext"],
     "include": ["src/**/*"],
     "exclude": ["/dist/", "/test/**/*"]
 }

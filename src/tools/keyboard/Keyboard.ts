@@ -36,11 +36,13 @@ export default class Keyboard extends EventEmitter {
 
     public static instance: Keyboard
 
-    public static getInstance (keyboardSettings: Object): Keyboard {
-        if (Keyboard.instance === undefined) {
-            Keyboard.instance = new Keyboard(keyboardSettings)
+    public static getInstance (keyboardSettings: Object): Keyboard | undefined {
+        if (typeof window !== 'undefined') {
+            if (Keyboard.instance === undefined) {
+                Keyboard.instance = new Keyboard(keyboardSettings)
+            }
+            return Keyboard.instance
         }
-        return Keyboard.instance
     }
 
     override events = new Map(

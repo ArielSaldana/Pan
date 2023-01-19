@@ -1,11 +1,13 @@
 export default class LocalStorage {
     public static instance: LocalStorage
     private constructor () { if (!this.isLocalStorageAvailable()) { throw Error('local storage not enabled') } }
-    public static getInstance(): LocalStorage {
-        if (LocalStorage.instance === undefined) {
-            return new LocalStorage()
+    public static getInstance(): LocalStorage | undefined {
+        if (typeof window !== 'undefined') {
+            if (LocalStorage.instance === undefined) {
+                return new LocalStorage()
+            }
+            return LocalStorage.instance
         }
-        return LocalStorage.instance
     }
 
     isLocalStorageAvailable(): boolean {
