@@ -15,14 +15,12 @@ export default class Ticker extends EventEmitter {
         super()
     }
 
-    static getInstance(): Ticker {
+    static getInstance(): Ticker | undefined {
         if (typeof window !== 'undefined') {
             if (Ticker.instance === undefined) {
                 Ticker.instance = new Ticker()
             }
             return Ticker.instance
-        } else {
-            throw new Error('window is not defined')
         }
     }
 

@@ -5,7 +5,9 @@ export default class TickerEventListAnimator {
     tickerEventList: TickerEventList = new TickerEventList()
     ticker = Ticker.getInstance()
     constructor () {
-        this.ticker.on('tick', this.animateOnTick)
+        if (this.ticker !== undefined) {
+            this.ticker.on('tick', this.animateOnTick)
+        }
     }
 
     animateOnTick(): void {
