@@ -12,7 +12,8 @@ const config = {
             name: 'Pan',
             type: 'umd'
         },
-        filename: 'pan.js'
+        filename: 'pan.js',
+        publicPath: ''
     },
     plugins: [
         new HtmlWebpackPlugin({
