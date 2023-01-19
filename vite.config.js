@@ -12,7 +12,6 @@ module.exports = defineConfig({
         rollupOptions: {
             output: {
                 globals: {
-                    document: 'Document'
                 }
             }
         },

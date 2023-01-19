@@ -16,10 +16,14 @@ export default class Ticker extends EventEmitter {
     }
 
     static getInstance(): Ticker {
-        if (Ticker.instance === undefined) {
-            Ticker.instance = new Ticker()
+        if (window !== undefined) {
+            if (Ticker.instance === undefined) {
+                Ticker.instance = new Ticker()
+            }
+            return Ticker.instance
+        } else {
+            throw new Error('window is not defined')
         }
-        return Ticker.instance
     }
 
     override events = new Map(

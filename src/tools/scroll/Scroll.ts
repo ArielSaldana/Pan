@@ -17,10 +17,14 @@ export default class Scroll extends EventEmitter {
 
     public static instance: Scroll
     public static getInstance(options?: any): Scroll {
-        if (Scroll.instance === undefined) {
-            Scroll.instance = new Scroll()
+        if (window !== undefined) {
+            if (Scroll.instance === undefined) {
+                Scroll.instance = new Scroll()
+            }
+            return Scroll.instance
+        } else {
+            throw new Error('window is not defined')
         }
-        return Scroll.instance
     }
 
     override events = new Map()

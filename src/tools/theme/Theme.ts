@@ -30,10 +30,14 @@ export default class Theme extends EventEmitter {
 
     public static instance: Theme
     public static getInstance (themeSettings: ThemeSettings): Theme {
-        if (Theme.instance === undefined) {
-            Theme.instance = new Theme(themeSettings)
+        if (window !== undefined) {
+            if (Theme.instance === undefined) {
+                Theme.instance = new Theme(themeSettings)
+            }
+            return Theme.instance
+        } else {
+            throw new Error('window is not defined')
         }
-        return Theme.instance
     }
 
     private constructor (themeSettings: ThemeSettings) {
