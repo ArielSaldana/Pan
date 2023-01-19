@@ -54,8 +54,10 @@ const config = {
 module.exports = () => {
     if (isProduction) {
         config.mode = 'production'
+        config.output.filename = 'pan.min.js'
     } else {
         config.mode = 'development'
+        config.output.filename = 'pan.js'
     }
     return config
 }
