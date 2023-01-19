@@ -3,6 +3,7 @@ const { defineConfig } = require('vite')
 
 module.exports = defineConfig({
     build: {
+        minify: false,
         lib: {
             entry: path.resolve(__dirname, 'src/Pan.ts'),
             formats: ['es', 'cjs', 'umd', 'amd'],

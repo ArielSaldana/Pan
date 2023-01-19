@@ -7,14 +7,12 @@ export default class Mouse extends EventEmitter {
     }
 
     public static instance: Mouse
-    public static getInstance(): Mouse {
-        if (window !== undefined) {
+    public static getInstance(): Mouse | undefined {
+        if (typeof window !== 'undefined') {
             if (Mouse.instance === undefined) {
                 Mouse.instance = new Mouse()
             }
             return Mouse.instance
-        } else {
-            throw new Error('window is not defined')
         }
     }
 

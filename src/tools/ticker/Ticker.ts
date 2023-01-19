@@ -16,7 +16,7 @@ export default class Ticker extends EventEmitter {
     }
 
     static getInstance(): Ticker {
-        if (window !== undefined) {
+        if (typeof window !== 'undefined') {
             if (Ticker.instance === undefined) {
                 Ticker.instance = new Ticker()
             }

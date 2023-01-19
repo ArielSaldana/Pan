@@ -29,14 +29,12 @@ export default class Theme extends EventEmitter {
     settings: ThemeSettings = { }
 
     public static instance: Theme
-    public static getInstance (themeSettings: ThemeSettings): Theme {
-        if (window !== undefined) {
+    public static getInstance (themeSettings: ThemeSettings): Theme | undefined {
+        if (typeof window !== 'undefined') {
             if (Theme.instance === undefined) {
                 Theme.instance = new Theme(themeSettings)
             }
             return Theme.instance
-        } else {
-            throw new Error('window is not defined')
         }
     }
 
@@ -219,6 +217,6 @@ export default class Theme extends EventEmitter {
 }
 
 // add theme class to <html> tag, normal people usually use dark
-if (window !== undefined) {
+if (typeof window !== 'undefined') {
     Theme.setDocumentTheme()
 }
