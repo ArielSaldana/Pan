@@ -36,7 +36,7 @@ export default class Mouse extends EventEmitter {
             x: eventInformation.clientX,
             y: eventInformation.clientY
         }
-        this.emit('move', location)
+        this.emit('move', location, eventInformation)
     }
 
     mouseClick(eventInformation): void {
