@@ -71,4 +71,11 @@ export default class Viewport extends EventEmitter {
             callback(location)
         }
     }
+
+    static getInformation(): any {
+        return {
+            width: window.innerWidth,
+            height: window.innerHeight
+        }
+    }
 }
