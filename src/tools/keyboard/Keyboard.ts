@@ -98,7 +98,7 @@ export default class Keyboard extends EventEmitter {
                 altKeyDown: eventInformation.altKey,
                 ctrlKeyDown: eventInformation.ctrlKey,
                 shiftKeyDown: eventInformation.shiftKey,
-                keyInformation: keyInformation
+                keyInformation
             }
             this.emit(eventInformation.type, eventInformation.key, eventInformation)
             this.emit('all', keyEmitObject, eventInformation)
