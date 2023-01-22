@@ -1,11 +1,11 @@
 interface RenderingEngine {
-    name: string,
+    name: string
     version: number
 }
 interface DetectorState {
-    isMobile: boolean,
-    isTouchScreen: boolean,
-    isIphone: boolean,
+    isMobile: boolean
+    isTouchScreen: boolean
+    isIphone: boolean
     isAndroid: boolean
     operatingSystem: string[]
     renderingEngines: RenderingEngine[]
@@ -30,54 +30,59 @@ export default class Detector {
     }
 
     isTouchScreen(): boolean {
-        let hasTouchScreen = false;
-        if ("maxTouchPoints" in navigator) {
-            hasTouchScreen = navigator.maxTouchPoints > 0;
-        } else if ("msMaxTouchPoints" in navigator) {
-            // @ts-ignore
-            hasTouchScreen = navigator.msMaxTouchPoints > 0;
+        let hasTouchScreen = false
+        if ('maxTouchPoints' in navigator) {
+            hasTouchScreen = navigator.maxTouchPoints > 0
+        } else if ('msMaxTouchPoints' in navigator) {
+            // @ts-expect-error
+            hasTouchScreen = navigator.msMaxTouchPoints > 0
         } else {
-            const mQ = matchMedia?.("(pointer:coarse)");
-            if (mQ?.media === "(pointer:coarse)") {
-                hasTouchScreen = !!mQ.matches;
-            } else if ("orientation" in window) {
-                hasTouchScreen = true; // deprecated, but good fallback
+            const mQ = matchMedia?.('(pointer:coarse)')
+            if (mQ?.media === '(pointer:coarse)') {
+                hasTouchScreen = !!mQ.matches
+            } else if ('orientation' in window) {
+                hasTouchScreen = true // deprecated, but good fallback
             } else {
                 // Only as a last resort, fall back to user agent sniffing
-                const UA = navigator.userAgent;
+                const UA = navigator.userAgent
                 hasTouchScreen =
                     /\b(BlackBerry|webOS|iPhone|IEMobile)\b/i.test(UA) ||
-                    /\b(Android|Windows Phone|iPad|iPod)\b/i.test(UA);
+                    /\b(Android|Windows Phone|iPad|iPod)\b/i.test(UA)
             }
         }
         return hasTouchScreen
     }
 
     isMobile(): boolean {
-        return navigator.userAgent.indexOf("Mobi") !== -1
+        return navigator.userAgent.includes('Mobi')
     }
 
     isRenderingEngineGecko(): boolean {
-        return navigator.userAgent.indexOf("Gecko/") !== -1
-    }
-    isRenderingEngineWebKit(): boolean {
-        return navigator.userAgent.indexOf("WebKit/") !== -1
-    }
-    isRenderingEnginePresto(): boolean {
-        return navigator.userAgent.indexOf("Opera/") !== -1
-    }
-    isRenderingEngineTrident(): boolean {
-        return navigator.userAgent.indexOf("Trident/") !== -1
-    }
-    isRenderingEngineEdge(): boolean {
-        return navigator.userAgent.indexOf("Edge/") !== -1
-    }
-    isRenderingEngineBlink(): boolean {
-        return navigator.userAgent.indexOf("Chrome/") !== -1
+        return navigator.userAgent.includes('Gecko/')
     }
 
-    setIfRenderingEngineExist(renderingEngineCheck: Function, renderingEngineRegex: RegExp) {
-        if (renderingEngineCheck()) {
+    isRenderingEngineWebKit(): boolean {
+        return navigator.userAgent.includes('WebKit/')
+    }
+
+    isRenderingEnginePresto(): boolean {
+        return navigator.userAgent.includes('Opera/')
+    }
+
+    isRenderingEngineTrident(): boolean {
+        return navigator.userAgent.includes('Trident/')
+    }
+
+    isRenderingEngineEdge(): boolean {
+        return navigator.userAgent.includes('Edge/')
+    }
+
+    isRenderingEngineBlink(): boolean {
+        return navigator.userAgent.includes('Chrome/')
+    }
+
+    setIfRenderingEngineExist(renderingEngineCheck: Function, renderingEngineRegex: RegExp): void {
+        if (renderingEngineCheck() === true) {
             const userAgentMatch = navigator.userAgent.match(renderingEngineRegex)
             if (userAgentMatch !== null && userAgentMatch.length >= 3) {
                 const browserRenderingEngine: RenderingEngine = {
@@ -89,18 +94,18 @@ export default class Detector {
         }
     }
 
-    setOperatingSystem() {
-        if (navigator.userAgent.indexOf('iPhone') !== -1) {
+    setOperatingSystem(): void {
+        if (navigator.userAgent.includes('iPhone')) {
             this.state.isIphone = true
             this.state.operatingSystem.push('iPhone')
-        } else if (navigator.userAgent.indexOf('Android') !== -1) {
+        } else if (navigator.userAgent.includes('Android')) {
             this.state.isAndroid = true
             this.state.operatingSystem.push('Android')
-        } else if (navigator.userAgent.indexOf('Mac') !== -1) {
+        } else if (navigator.userAgent.includes('Mac')) {
             this.state.operatingSystem.push('MacOS')
-        } else if (navigator.userAgent.indexOf('Window') !== -1) {
+        } else if (navigator.userAgent.includes('Window')) {
             this.state.operatingSystem.push('Windows')
-        } else if (navigator.userAgent.indexOf('Linux') !== -1) {
+        } else if (navigator.userAgent.includes('Linux')) {
             this.state.operatingSystem.push('Linux')
         }
     }
@@ -120,6 +125,7 @@ export default class Detector {
         this.setIfRenderingEngineExist(this.isRenderingEngineWebKit, this.webKitRegex)
         this.setOperatingSystem()
     }
+
     static instance: Detector
 
     static getInstance(): Detector | undefined {
