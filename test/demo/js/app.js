@@ -58,6 +58,12 @@
         })
         const header = document.getElementById('top-bar')
 
+        const detector = Pan.Detector.getInstance()
+        const detectorElement = document.getElementById('detector')
+        detectorElement.innerText = JSON.stringify(detector.state)
+        // detectorElement.innerText = navigator.userAgent
+
+
         //        const scroll = Pan.Scroll.getInstance()
         //        scroll.on('scroll', (scrollEvent) => {
         //            if (scrollEvent.scrollDirection === 'down') {

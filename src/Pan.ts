@@ -7,6 +7,7 @@ import Theme from './tools/theme/Theme'
 import LocalStorage from './tools/local-storage/LocalStorage'
 import Scroll from './tools/scroll/Scroll'
 import CustomScroll from './tools/scroll/CustomScroll'
+import Detector from "./tools/detector/Detector";
 
 const viewport = Viewport.getInstance
 const mouse = Mouse.getInstance
@@ -24,5 +25,6 @@ export {
     CustomScroll,
     viewport,
     mouse,
-    ticker
+    ticker,
+    Detector
 }
