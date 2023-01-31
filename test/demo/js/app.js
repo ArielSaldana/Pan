@@ -1,5 +1,23 @@
 (() => {
     window.addEventListener('load', () => {
+        const scroller = new Pan.Scroller();
+
+        const elements = document.getElementsByClassName('box');
+        for (const elem of elements) {
+            scroller.whenElementInViewport(elem, (inViewPort) => {
+                elem.style.opacity = 1
+                console.log('in viewport')
+            }, {
+                offset: 100
+            })
+        }
+
+        scroller.whenElementInViewport(document.getElementById('theme-widget'), (inViewPort) => {
+            console.log('in viewport')
+        }, {
+            offset: 100
+        })
+
         const theme = Pan.Theme.getInstance({
             useLocalStorage: true,
             useSystemSettings: false,
@@ -10,6 +28,7 @@
         // add theme to the window object so we can access it from html `onClick="theme.toggle()"`
         window.theme = theme
         const themeElem = document.getElementById('theme')
+
         theme.on('change', (themeEvent, rawEvent) => {
             themeElem.innerText = themeEvent.theme
         })
@@ -62,6 +81,7 @@
         const detectorElement = document.getElementById('detector')
         detectorElement.innerText = JSON.stringify(detector.state)
         // detectorElement.innerText = navigator.userAgent
+
 
 
         //        const scroll = Pan.Scroll.getInstance()
@@ -208,6 +228,6 @@
         // if the animation is at 25%, and then button is clicked again - it should be as if 75% of the animation already happened
         // so we change the tick start time
 
-        new Pan.CustomScroll()
+//        new Pan.CustomScroll()
     })
 })()
