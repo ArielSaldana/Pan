@@ -191,3 +191,15 @@ header#top-bar.hide {
 #animation-box-2 {
     background: blue;
 }
+
+#long-scroller .box {
+    display: block;
+    height: 80vw;
+    width: 80vw;
+    background: gray;
+    margin: 60px auto;
+    max-width: 500px;
+    max-height: 500px;
+    opacity: 0;
+    transition: opacity .3s ease-out;
+}

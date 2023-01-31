@@ -1,6 +1,7 @@
 import ScrollerElement from './ScrollerElement'
 import Scroll from '../scroll/Scroll'
 import Viewport from '../viewport/Viewport'
+import ScrollerElementConfig from './ScrollerElementConfig'
 
 export default class Scroller {
     scroller = Scroll.getInstance()
@@ -63,25 +64,29 @@ export default class Scroller {
         return rect.top as number + window.pageYOffset + topPadding
     }
 
-    whenElementInViewport(element: HTMLElement, callback: Function): void {
-        this.elements.push({
-            element,
-            callback
-        })
+    private isElementInsideViewport(element: ScrollerElement): boolean {
+        if (Math.round(document.body.offsetHeight) === Math.round(this.scrollerState.y + this.scrollerState.viewportHeight)) {
+            return true
+        }
+        const elementPositionFromTop = this.find(element.element)
+        const elementEnteredViewport = element.element.offsetHeight + elementPositionFromTop
+        return this.scrollerState.y + this.scrollerState.viewportHeight - element.offset >= elementEnteredViewport
     }
 
-    elementInsideViewport(element: any): boolean {
-        const elementPositionFromTop = this.find(element)
-        const elementEnteredViewport = element.offsetHeight as number + elementPositionFromTop
-        return this.scrollerState.y + this.scrollerState.viewportHeight >= elementEnteredViewport
-    }
-
-    calculatePositions(): void {
+    private calculatePositions(): void {
         for (const element of this.elements) {
-            if (this.elementInsideViewport(element.element)) {
+            if (this.isElementInsideViewport(element)) {
                 element.callback()
             }
         }
         requestAnimationFrame(this.calculatePositions.bind(this))
+    }
+
+    whenElementInViewport(element: HTMLElement, callback: Function, config?: ScrollerElementConfig): void {
+        this.elements.push({
+            element,
+            callback,
+            offset: (config?.offset !== undefined) ? config.offset : 0
+        })
     }
 }
