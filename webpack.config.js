@@ -48,6 +48,10 @@ const config = {
         },
         compress: false,
         port: 3001
+    },
+    // fixes an issue with the hash not being set correctly.
+    optimization: {
+        realContentHash: false
     }
 }
 
