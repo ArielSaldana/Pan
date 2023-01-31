@@ -11,8 +11,8 @@ export default class Scroll extends EventEmitter {
     }
 
     state: ScrollState = {
-        lastXPosition: 0,
-        lastYPosition: 0
+        lastXPosition: document.documentElement.scrollLeft,
+        lastYPosition: document.documentElement.scrollTop
     }
 
     public static instance: Scroll
@@ -87,5 +87,9 @@ export default class Scroll extends EventEmitter {
             deltaX: wheelEvent.deltaX,
             deltaY: wheelEvent.deltaY
         }
+    }
+
+    getScrollState(): ScrollState {
+        return this.state
     }
 }

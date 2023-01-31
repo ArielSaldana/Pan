@@ -19,4 +19,4 @@ module.exports = defineConfig({
         target: 'es2015',
         sourceMap: true
     }
-});
+})

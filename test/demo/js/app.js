@@ -1,5 +1,10 @@
 (() => {
     window.addEventListener('load', () => {
+        const scroller = new Pan.Scroller();
+        scroller.whenElementInViewport(document.getElementById('theme-widget'), (inViewPort) => {
+            console.log('in viewport')
+        })
+
         const theme = Pan.Theme.getInstance({
             useLocalStorage: true,
             useSystemSettings: false,
@@ -62,6 +67,7 @@
         const detectorElement = document.getElementById('detector')
         detectorElement.innerText = JSON.stringify(detector.state)
         // detectorElement.innerText = navigator.userAgent
+
 
 
         //        const scroll = Pan.Scroll.getInstance()
@@ -208,6 +214,6 @@
         // if the animation is at 25%, and then button is clicked again - it should be as if 75% of the animation already happened
         // so we change the tick start time
 
-        new Pan.CustomScroll()
+//        new Pan.CustomScroll()
     })
 })()
