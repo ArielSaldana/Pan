@@ -13,13 +13,49 @@ export default class Scroller {
         x: 0,
         y: 0,
         viewportHeight: 0,
-        viewportWidth: 0
+        viewportWidth: 0,
+        viewportCoordinatesTopLeft: {
+            x: 0,
+            y: 0
+        },
+        viewportCoordinatesBottomRight: {
+            x: 0,
+            y: 0
+        }
     }
 
     elements: ScrollerElement[] = []
+
+    updateScrollerStateScrollX(scrollX: number): void {
+        this.scrollerState.x = scrollX
+        this.updateScrollerState()
+    }
+
+    updateScrollerStateScrollY(scrollY: number): void {
+        this.scrollerState.y = scrollY
+        this.updateScrollerState()
+    }
+
+    updateScrollerStateViewportWidth(viewportWidth: number): void {
+        this.scrollerState.viewportWidth = viewportWidth
+        this.updateScrollerState()
+    }
+
+    updateScrollerStateViewportHeight(viewportHeight: number): void {
+        this.scrollerState.viewportHeight = viewportHeight
+        this.updateScrollerState()
+    }
+
+    updateScrollerState(): void {
+        this.scrollerState.viewportCoordinatesTopLeft.x = this.scrollerState.x
+        this.scrollerState.viewportCoordinatesTopLeft.y = this.scrollerState.y
+        this.scrollerState.viewportCoordinatesBottomRight.x = this.scrollerState.x + this.scrollerState.viewportWidth
+        this.scrollerState.viewportCoordinatesBottomRight.y = this.scrollerState.y + this.scrollerState.viewportHeight
+    }
+
     constructor () {
-        this.scrollerState.x = this.scroller?.getScrollState().lastXPosition as number
-        this.scrollerState.y = this.scroller?.getScrollState().lastYPosition as number
+        this.updateScrollerStateScrollX(this.scroller?.getScrollState().lastXPosition as number)
+        this.updateScrollerStateScrollY(this.scroller?.getScrollState().lastYPosition as number)
         this.initScrollListener()
         this.initViewportListener()
         requestAnimationFrame(this.calculatePositions.bind(this))
@@ -29,8 +65,8 @@ export default class Scroller {
         if (this.scroller !== undefined) {
             console.log('initializing')
             this.scroller.on('scroll', (scrollEvent: any) => {
-                this.scrollerState.x = scrollEvent.scrollX
-                this.scrollerState.y = scrollEvent.scrollY
+                this.updateScrollerStateScrollX(scrollEvent.scrollX)
+                this.updateScrollerStateScrollY(scrollEvent.scrollY)
             })
         }
     }
@@ -38,9 +74,8 @@ export default class Scroller {
     initViewportListener(): void {
         if (this.viewport !== undefined) {
             this.viewport.on('resize', (event: any) => {
-                this.scrollerState.viewportHeight = event.height
-                this.scrollerState.viewportWidth = event.width
-                console.log(this.scrollerState)
+                this.updateScrollerStateViewportWidth(event.width)
+                this.updateScrollerStateViewportHeight(event.height)
             })
         }
     }
