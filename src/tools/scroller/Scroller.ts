@@ -2,6 +2,7 @@ import ScrollerElement from './ScrollerElement'
 import Scroll from '../scroll/Scroll'
 import Viewport from '../viewport/Viewport'
 import ScrollerElementConfig from './ScrollerElementConfig'
+import CoordinatePair from './CoordinatePair'
 
 export default class Scroller {
     scroller = Scroll.getInstance()
@@ -12,16 +13,20 @@ export default class Scroller {
     scrollerState = {
         x: 0,
         y: 0,
-        viewportHeight: 0,
-        viewportWidth: 0,
-        viewportCoordinatesTopLeft: {
-            x: 0,
-            y: 0
+        viewport: {
+            coordinatePair: {
+                topLeft: {
+                    x: 0,
+                    y: 0
+                },
+                bottomRight: {
+                    x: 0,
+                    y: 0
+                }
+            }
         },
-        viewportCoordinatesBottomRight: {
-            x: 0,
-            y: 0
-        }
+        viewportHeight: 0,
+        viewportWidth: 0
     }
 
     elements: ScrollerElement[] = []
@@ -47,10 +52,10 @@ export default class Scroller {
     }
 
     updateScrollerState(): void {
-        this.scrollerState.viewportCoordinatesTopLeft.x = this.scrollerState.x
-        this.scrollerState.viewportCoordinatesTopLeft.y = this.scrollerState.y
-        this.scrollerState.viewportCoordinatesBottomRight.x = this.scrollerState.x + this.scrollerState.viewportWidth
-        this.scrollerState.viewportCoordinatesBottomRight.y = this.scrollerState.y + this.scrollerState.viewportHeight
+        this.scrollerState.viewport.coordinatePair.topLeft.x = this.scrollerState.x
+        this.scrollerState.viewport.coordinatePair.topLeft.y = this.scrollerState.y
+        this.scrollerState.viewport.coordinatePair.bottomRight.x = this.scrollerState.x + this.scrollerState.viewportWidth
+        this.scrollerState.viewport.coordinatePair.bottomRight.y = this.scrollerState.y + this.scrollerState.viewportHeight
     }
 
     constructor () {
@@ -92,14 +97,61 @@ export default class Scroller {
         return distanceFromTop
     }
 
-    find2(element: any): number {
-        const style = window.getComputedStyle(element)
-        const topPadding = parseFloat(style.paddingTop)
-        const rect = element.getBoundingClientRect()
-        return rect.top as number + window.pageYOffset + topPadding
+    getElementDistanceFromTop(element: any): number {
+        let distanceFromTop = 0
+        let currentElement = element
+
+        while (currentElement !== null) {
+            distanceFromTop += currentElement.offsetTop as number
+            currentElement = currentElement.offsetParent
+        }
+
+        return distanceFromTop
+    }
+
+    getElementDistanceFromLeft(element: any): number {
+        let distanceFromLeft = 0
+        let currentElement = element
+
+        while (currentElement !== null) {
+            distanceFromLeft += currentElement.offsetLeft as number
+            currentElement = currentElement.offsetParent
+        }
+
+        return distanceFromLeft
+    }
+
+    getElementCoordinatePair(element: any): CoordinatePair {
+        const elementDistanceFromLeft = this.getElementDistanceFromLeft(element)
+        const elementDistanceFromTop = this.getElementDistanceFromTop(element)
+        const width = element.offsetWidth as number
+        const height = element.offsetHeight as number
+
+        return {
+            topLeft: {
+                x: elementDistanceFromLeft,
+                y: elementDistanceFromTop
+            },
+            bottomRight: {
+                x: elementDistanceFromLeft + width,
+                y: elementDistanceFromTop + height
+            }
+        }
+    }
+
+    isCoordinatePairInside(pairA: CoordinatePair, pairB: CoordinatePair): boolean {
+        return (pairA.topLeft.x <= pairB.topLeft.x &&
+            pairA.topLeft.y <= pairB.topLeft.y &&
+            pairA.bottomRight.x >= pairB.bottomRight.x &&
+            pairA.bottomRight.y >= pairB.bottomRight.y)
     }
 
     private isElementInsideViewport(element: ScrollerElement): boolean {
+        const elementCoordinatePair = this.getElementCoordinatePair(element.element)
+        return this.isCoordinatePairInside(this.scrollerState.viewport.coordinatePair, elementCoordinatePair)
+    }
+
+    private isElementAboveViewport(element: ScrollerElement): boolean {
         if (Math.round(document.body.offsetHeight) === Math.round(this.scrollerState.y + this.scrollerState.viewportHeight)) {
             return true
         }
