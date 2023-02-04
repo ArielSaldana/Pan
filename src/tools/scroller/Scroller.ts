@@ -139,16 +139,16 @@ export default class Scroller {
         }
     }
 
-    isCoordinatePairInside(pairA: CoordinatePair, pairB: CoordinatePair): boolean {
-        return (pairA.topLeft.x <= pairB.topLeft.x &&
-            pairA.topLeft.y <= pairB.topLeft.y &&
-            pairA.bottomRight.x >= pairB.bottomRight.x &&
-            pairA.bottomRight.y >= pairB.bottomRight.y)
+    isCoordinatePairInside(pairA: CoordinatePair, pairB: CoordinatePair, offset: number): boolean {
+        return (pairA.topLeft.x <= pairB.topLeft.x - offset &&
+            pairA.topLeft.y <= pairB.topLeft.y - offset &&
+            pairA.bottomRight.x >= pairB.bottomRight.x - offset &&
+            pairA.bottomRight.y >= pairB.bottomRight.y - offset)
     }
 
     private isElementInsideViewport(element: ScrollerElement): boolean {
         const elementCoordinatePair = this.getElementCoordinatePair(element.element)
-        return this.isCoordinatePairInside(this.scrollerState.viewport.coordinatePair, elementCoordinatePair)
+        return this.isCoordinatePairInside(this.scrollerState.viewport.coordinatePair, elementCoordinatePair, element.offset)
     }
 
     private isElementAboveViewport(element: ScrollerElement): boolean {
