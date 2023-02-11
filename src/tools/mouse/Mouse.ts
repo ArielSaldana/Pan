@@ -3,16 +3,24 @@ import { EventEmitter } from '../../event-emitter/EventEmitter'
 export default class Mouse extends EventEmitter {
     settings = {
         isMouseOnMoveEnabled: false,
-        isMouseClickEnabled: false
+        isMouseClickEnabled: false,
+        element: window
     }
 
     public static instance: Mouse
-    public static getInstance(): Mouse | undefined {
+    public static getInstance(settings: any | undefined): Mouse | undefined {
         if (typeof window !== 'undefined') {
             if (Mouse.instance === undefined) {
-                Mouse.instance = new Mouse()
+                Mouse.instance = new Mouse(settings)
             }
             return Mouse.instance
+        }
+    }
+
+    constructor (settings: any) {
+        super()
+        if (settings?.element !== undefined) {
+            this.settings.element = settings.element
         }
     }
 
@@ -57,7 +65,7 @@ export default class Mouse extends EventEmitter {
 
     registerMouseMoveEventListener(): void {
         if (!this.settings.isMouseOnMoveEnabled) {
-            window.addEventListener('mousemove', (ev) => {
+            this.settings.element.addEventListener('mousemove', (ev) => {
                 this.mouseMove(ev)
             })
             this.settings.isMouseOnMoveEnabled = true
@@ -65,13 +73,13 @@ export default class Mouse extends EventEmitter {
     }
 
     destroyMouseMoveEventListener(): void {
-        window.removeEventListener('mousemove', this.mouseMove)
+        this.settings.element.removeEventListener('mousemove', this.mouseMove)
         this.settings.isMouseOnMoveEnabled = false
     }
 
     registerMouseClickEventListener(): void {
         if (!this.settings.isMouseClickEnabled) {
-            window.addEventListener('click', (ev) => {
+            this.settings.element.addEventListener('click', (ev) => {
                 this.mouseClick(ev)
             })
             this.settings.isMouseClickEnabled = true
@@ -79,7 +87,7 @@ export default class Mouse extends EventEmitter {
     }
 
     destroyMouseClickEventListener(): void {
-        window.removeEventListener('click', this.mouseMove)
+        this.settings.element.removeEventListener('click', this.mouseMove)
         this.settings.isMouseClickEnabled = false
     }
 }
